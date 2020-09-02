@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id='app'>
+        <input type="text" v-model='msg'>
+        <input type="text" v-bind:value='msg'>
+        <input type="radio" v-bind:checked='boo'>
+        <input type="text" :value='msg'> {{msg}}
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: '文字',
+                boo: true,
+            },
+            methods: {},
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <button v-on:click='dothis'>按钮1</button>
+        <button v-on:click='mas=123'>按钮2</button>{{mas}}
+        <button v-on:click="alert('111')">按钮3</button>//这个是错误的写法
+        <hr>
+        <button v-on:click="add1">按钮1+100</button>
+        <div></div>
+        <hr>
+        <button v-on:click="add2(20, $event)">按钮2+100</button>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                mas: 456,
+                num: 10,
+            },
+            methods: {
+                dothis: function() {
+                    alert('哈哈哈哈');
+                },
+                add1(event) {
+                    console.log(event.target.innerHTML);
+                    var res = event.target.innerHTML;
+                    //用到data里面的数据要用this获取
+                    this.num += (res.substring((res.indexOf('+') + 1)) - 0)
+                },
+                add2(param, event) {
+                    console.log(param);
+                    const res = event.target.innerHTML.substring((event.target.innerHTML.indexOf('+') + 1));
+                    //用到data里面的数据要用this获取
+                    console.log(res);
+                    console.log(param + (res - 0));
+
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
