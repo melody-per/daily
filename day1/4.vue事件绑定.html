@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <script src="./vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <button @click="msg(1,2,3)">按钮1</button>
+        <button @mouseover="msg2(4,5,6)">按钮2</button>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {},
+            methods: {
+                msg: function (a, b) {
+                    console.dir(a, b)
+                },
+                msg2: function (a, b, c) {
+                    console.dir(a, b, c)
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

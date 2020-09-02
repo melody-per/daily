@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+    <style>
+        .box {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="box" @click="msg">
+            <button @click="msg2">按钮</button>
+            <button @click.stop="msg2">按钮(阻止冒泡)</button><br>
+            <a href="http://www.baidu.com" @click="msg3">我要去往百度</a><br>
+            <a href="http://www.baidu.com" @click.prevent.stop="msg3">我要不了百度</a>
+        </div>
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {},
+            methods: {
+                msg: function () {
+                    console.log("打印了div");
+                },
+                msg2: function () {
+                    console.log('打印了button')
+                },
+                msg3: function () {
+                    console.log("阻止跳转，阻止冒泡？")
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>
