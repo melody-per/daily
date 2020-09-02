@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- v-bind 单向数据绑定  简写为:-->
+    <div id="app">
+        <input type="text" v-bind:value='msg'>
+        <input type="text" :value='msg'>
+        <input type="text" v-model='msg'>
+        <input type="radio" :value.checked="boo">
+    </div>
+    <script src="../vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                msg: '文字'
+            },
+            methods: {
+                todo() {
+                    boo:true
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

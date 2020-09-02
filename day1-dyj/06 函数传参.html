@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+            <input type="text" v-model="num">
+            <button v-on:click="add">按钮+100</button>
+            <button v-on:click="add1(150,$event)">按钮2+200</button>
+    </div>
+   
+    <script>
+
+        new Vue({
+
+            el:'#app',
+            data:{
+                num:10
+            },
+            methods:{
+                add(e){
+                    //注意: 效果错误
+                    var res = e.target.innerHTML;
+                    console.log(res);
+                    //获取到button里的100
+                    var msg = (res.substring(e.target.innerHTML.indexOf('+')+1))-0;
+                    console.log(msg);
+                    this.num += msg;
+                },
+                add1(param,event) {
+                    console.log(param);
+                    const tagcount = event.target.innerHTML.substring(
+                        event.target.innerHTML.indexOf('+')+1
+                    );
+                    console.log(tagcount);
+                    var msg1 = param +(tagcount -0)
+                    console.log(param +(tagcount -0));
+                    this.num += msg1
+                }
+            }
+
+
+        })
+
+
+
+    </script>
+</body>
+</html>

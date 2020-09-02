@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .fa {
+            width: 300px;
+            height: 300px;
+            background-color: pink;
+        }
+
+        a {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="fa" @click='alert'>
+        <!-- stop 阻止冒泡 -->
+        <button @click.stop="alert1">按钮</button>
+        <a href="http://www.baidu.com" @click.prevent='alert2'>百度</a>
+
+    </div>
+    <script src="../vue.js"></script>
+    <script>
+        new Vue({
+            el: '.fa',
+            data: {
+                msg: '15'
+            },
+            methods: {
+                alert() {
+                    alert('66');
+                },
+                alert1() {
+                    alert('77');
+                },
+                alert2() {
+                    console.log(1);
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

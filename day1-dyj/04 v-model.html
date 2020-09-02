@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+
+        <!-- v-mode  双向绑定  数据驱动视图, 视图也可以驱动数据 -->
+       
+        <input type="text"  v-model="msg">
+        {{msg}}
+
+        <!--思路:  两个单选按钮都绑定ischeck  当点击任意一个按钮时 data里的ischeck内容都会改变  -->
+        <!-- <input type="radio" value="男" v-model='ischeck'>男
+        <input type="radio" value="女" v-model='ischeck'>女  {{ischeck}} -->
+    </div>
+    <script src="../vue.js"></script>
+    <script>
+        const vm = new Vue({
+
+            el:'#app',
+            data:{
+                msg:'11',
+                ischeck:'kong'
+            }
+
+        })
+
+
+    </script>
+</body>
+</html>

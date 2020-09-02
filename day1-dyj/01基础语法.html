@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 引入js文件  此时文档中有 V 的构造函数 -->
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <!-- 2  使用插值表达式 -->
+        <div class="app">
+            {{msg}}
+            {{msg1}}
+        </div>
+       
+<div id="app">
+    {{mag1}}
+</div>
+    <script>
+        //1  构造vue函数
+        //new Vue 
+        const vm = new Vue({
+            //el指定  控制html的内容范围
+            el:'.app',
+            //data 放置数据的配置项
+            data:{
+                msg:'hello',
+                msg1:'你好'
+            },  
+        })
+
+        const vm1 = new Vue({
+            el:"#app",
+            data:{
+                mag1:'world'
+            }
+
+        })
+      
+    </script>
+</body>
+</html>

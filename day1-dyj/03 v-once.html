@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="app">
+
+        <p>{{number}}</p>
+
+        <p v-once>{{num}}</p>
+    </div>
+    <script>
+        //思路:  vm.number = 123 是给number重新赋值并在页面重新渲染 
+        //2--  v-once只在页面初始化时渲染一次数据,之后数据更新也不会再次渲染
+    var vm = new Vue({
+
+            el:'#app',
+            
+            data:{
+                number:10,
+                num:20
+            }
+
+        })
+
+    </script>
+</body>
+</html>

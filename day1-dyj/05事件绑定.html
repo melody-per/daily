@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- <div id="app">
+        <!-- v-on:事件绑定 = 函数 -->
+        <button  v-on:click="doThis">按钮1</button>
+
+        <!-- 简单的点击后数据覆盖 -->
+        <button v-on:click = 'msg = 123'>按钮2</button> {{msg}}
+    </div> -->
+
+    <div class="num">
+        <!-- 会把alert解析为函数名  methods没有定义该函数 -->
+        <button v-on:click = 'alert("66")'>按钮3</button>
+    </div>
+    <script src="../vue.js"></script>
+    <script>
+
+        // new Vue({
+
+        //     el:"#app",
+        //     data:{
+        //         msg:'111'
+        //     },
+        //    methods:{
+        //        doThis(){
+        //            alert('123')
+        //        }
+        //    }
+        // })
+
+        new Vue({
+
+            el:'.num',
+            data:{
+                msg:'222',
+            },
+            methods:{
+                todo(){
+                    console.log(666);
+                }
+            }
+
+        })
+
+    </script>
+</body>
+</html>
