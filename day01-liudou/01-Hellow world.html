@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div>{{msg}}</div>
+        <!-- {{}}  3.使用插值表达式  渲染数据
+             插值表达式用法
+            1.将数据填充到HTML标签中
+            2.插值表达式支持基本的计算操作
+        -->
+        <div>{{1+2}}</div>
+        <div>{{msg + '------' + 123}}</div>
+    </div>
+    <script src="js/vue.js"></script>
+    <!--1引入vue.js  -->
+    <script>
+        //Vue的基本使用步骤
+        /*1.需要提供标签用于填充数据
+        2.引入vue.js库文件
+        3.可以使用vue的语法做功能了
+        4.把vue提供的数据填充到标签里面 
+        */
+
+        // 2. new Vue实例
+        var vm = new Vue({
+
+                el: '#app', // el: 控制HTML容器范围 // el: 元素的挂载位置（值可以是css选择器 或者 DOM元素）
+                data: { //data: 模型数据 (值是一个对象)
+                    msg: 'Hellow World'
+                }
+            })
+            //Vue代码运行原理分析
+            //1.概述编译过程的概念（Vue语法 ....Vue插件....->原生语法
+    </script>
+</body>
+
+</html>

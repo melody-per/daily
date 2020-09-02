@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div>{{msg}}</div>
+        <!-- <div v-once>{{info}}</div> -->
+        <div v-once>{{info}}</div>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        /* 
+                                v-once的应用场景： 如果显示的信息后续不需要再修改，你们可以使用v-once，这样可以提高性能。
+                                添加了 v-once 指令的标签，只有在页面初始化的时候渲染一次数据，之后数据更新，不会在页面中重新更新
+                                */
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: 'Hello Vue',
+                info: '你好'
+            }
+        })
+    </script>
+</body>
+
+</html>

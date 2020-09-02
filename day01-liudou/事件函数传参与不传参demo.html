@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <div>{{num}},{{num1}}</div>
+        <button v-on:click='handle'>按钮+100</button>
+        <button v-on:click='handle1(30,$event)'>按钮+100</button>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                num: 0,
+                num1: 0
+            },
+            methods: {
+                handle: function(param) {
+                    var res = param.target.innerHTML
+                    console.log(res);
+                    var result = res.substring((param.target.innerHTML).indexOf('+') + 1) - 0 //100
+                    this.num += result
+
+                },
+                handle1: function(num1, event) {
+                    console.log(num1);
+
+                    var res1 = event.target.innerHTML
+                    console.log(res1);
+                    var result1 = res1.substring(event.target.innerHTML.indexOf('+') + 1) - 0 //100
+                        // this.num1 += result1
+                        // num1 += result1
+                    console.log(num1 += result1);
+
+                }
+
+            }
+        })
+    </script>
+</body>
+
+</html>

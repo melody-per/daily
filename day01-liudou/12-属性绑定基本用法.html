@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- v-nodel 是双向绑定  v-bind: 是属性绑定（单向绑定—） v-bind: 简写为: -->
+        <a v-bind:href="url">百度</a>
+        <a :href="url">百度1</a>
+        <input type="radio" v-bind:checked='boo'>
+        <button v-on:click='handel'>切换</button>
+    </div>
+    <script src="js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                url: 'http://www.baidu.com',
+                boo: true
+            },
+            methods: {
+                handel: function() {
+                    //修改URL地址
+                    this.url = 'http://itcast.cn'
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
