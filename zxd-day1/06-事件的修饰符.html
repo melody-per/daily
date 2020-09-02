@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+    <style>
+        .box {
+            width: 200px;
+            height: 200px;
+            background-color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='app'>
+        <div class="box" @click="test1">
+            <button @click.stop="test">按钮</button>
+        </div>
+        <a href="http://www.baidu.com">百度一下</a>
+
+    </div>
+    <script src='vue.js'></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {},
+            methods: {
+                test() {
+                    alert(111)
+                },
+                test1() {
+                    alert(222)
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>
