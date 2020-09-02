@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+    <script src="../../vue.js"></script>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        {{msg}}
+        {{wxc}}
+        <p v-text='qq'></p>
+        <p v-html='ww'></p>
+        <input type="text" v-model="msg">
+        <input type="radio" value="1" v-model="msg2">
+        <input type="radio" value="2" v-model="msg2">
+        {{msg2}}
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                msg: 'Vue练习',
+                wxc: 547,
+                qq: 'qq',
+                ww: '<h1>ww</h1>',
+                msg2: '0'
+            }
+        })
+    </script>
+</body>
+
+</html>

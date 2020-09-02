@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+    <style>
+        #box {
+            width: 200px;
+            height: 200px;
+            background-color: springgreen;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='app'>
+        <!-- @是v-on:的缩写-->
+        <!-- once一次,prenent阻止默认,stop阻止冒泡 -->
+        <div id='box' @click='boxEvent'>
+            <button @click.stop='btnEvent'>按钮</button>
+        </div>
+        <a href="http://www.baidu.com" @click.prevent='aEvent'>百度一下</a>
+        <a href="http://www.baidu.com" @click.once='aEvent'>百度一下</a>
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {},
+            methods: {
+                boxEvent() {
+                    console.log('box');
+                },
+                btnEvent() {
+                    console.log('btn');
+                },
+                aEvent() {
+                    console.log('aaa');
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

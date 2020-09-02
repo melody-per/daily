@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        {{num}}
+        <button v-on:click="num++">按钮</button>
+        <!-- 函数在调用的时候,如果不涉及到参数的传递,加()和不加()是没有区别的 -->
+        <button v-on:click="add()">按钮</button>
+        <button v-on:click="add1(9,10)">按钮</button>
+        <!-- 不传参数 -->
+        <button v-on:click="add2">按钮+100</button>
+        <!-- 传参数,拿事件对象时要传$event对象 -->
+        <button v-on:click="add3(100,$event)">按钮+100</button>
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                num: 10
+            },
+            methods: {
+                add() {
+
+                },
+                add1(math1, math2) {
+                    console.log(math1, math2);
+                    this.num += math1 + math2
+                },
+                add2(event) {
+                    console.log(event.target.innerHTML);
+                    var str = event.target.innerHTML;
+                    console.log(str.substr(3));
+                    this.num += str.substr(3) - 0
+                },
+                add3(num, event) {
+                    console.log(num);
+                    var str = event.target.innerHTML;
+                    this.num += num + (str.substr(3) - 0)
+                },
+            }
+        })
+    </script>
+</body>
+
+</html>

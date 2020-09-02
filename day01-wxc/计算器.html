@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <input type="text" v-model="num1">
+        <select id="" v-model="sign">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+        </select>
+        <!-- <input type="text" v-model="num2"> -->
+        <!-- 回车实现 -->
+        <input type="text" v-model="num2" @keyup.enter=" calcsum">
+        <!-- <button @click="calcsum">计算</button> -->
+        <p>计算结果是:{{sum}}</p>
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                num1: '',
+                num2: '',
+                sign: '+',
+                sum: '',
+            },
+            methods: {
+                calcsum() {
+                    this.sum = +this.num1 + +this.num2
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

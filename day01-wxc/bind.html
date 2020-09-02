@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <input type="text" v-bind:value="msg">
+        <input type="text" :value="msg1">
+        <input type="radio" :checked="msg2">
+        {{msg}}
+        {{msg1}}
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+
+    <script>
+        // v-bind简写为:
+        new Vue({
+            el: '#app',
+            data: {
+                msg: 11,
+                msg1: 22,
+                msg2: false,
+            },
+            methods: {},
+        })
+    </script>
+</body>
+
+</html>
