@@ -1,0 +1,149 @@
+周期函数的作用
+beforeCreate：	在实例开始初始化时同步调用。此时数据观测、事件等都尚未初始化
+created：		在实例创建之后调用。此时已完成数据观测、事件方法，但尚未开始DOM编译，即未挂载到document中
+beforeMount：	在mounted之前运行。[2.0中的新钩子]
+mounted：	在编译结束时调用。此时所有指令已生效，数据变化已能触发DOM更新，但不保证$el已插入文档。
+beforeUpdate:	在实例挂载之后，再次更新实例（例如更新data）时会调用该方法，此时尚未更新DOM结构。[2.0中的新钩子]
+updated:		在实例挂载之后，再次更新实例并更新完DOM结构后调用。[2.0中的新钩子]
+beforeDestroy:	在开始销毁实例时调用，此刻实例仍然有效。
+destroyed:	在实例被销毁之后调用。此时所有绑定和实例指令都已经解绑，子实例也被销毁。 
+activated：	需要配合动态组件keep-live属性使用。在动态组件初始化渲染的过程中调用该方法。[2.0中的新钩子]
+deactivated：	需要配合动态组件keep-live属性使用。在动态组件移出的过程中调用该方法。[2.0中的新钩子]
+昭和葛葉@eyny
+v-once 	一次，插值不会改变
+v-html 	输出真正的html
+v-bind 	渲染一个id（class/src/herf）,而这个id是动态的     	v-bind: id 缩写：    ：id
+v-if   v-else-if   v-else 指令用于条件性地渲染一块内容。这块内容只会在指令的表达式返回 truthy 值的时候被渲染。
+v-show  	只是简单地切换元素的 CSS 属性 display
+v-on : [ 动态元素 ]  事件监听设置动态的元素		v-on: click 缩写：@click
+v-for 	指令需要使用 item in items 形式的特殊语法，其中 items 是源数据数组，而 item 则是被迭代的数组元素的别名。
+v-text, 	参数为string类型。主要用途是更新元素的textContent。
+v-pre 	相对来说是最好理解的一个指令了：跳过编译。意思是不对该元素进行编译。相对可以提高渲染速度
+v-cloak	这个指令可以隐藏未编译的 msg 标签 {{ }} (双括号)直到实例准备完毕。可以有效解决Vue加载时闪烁
+v-model	语法糖
+
+事件修饰符
+v-on: 事件 . stop		click.stop.prevent   事件修饰符可以串联
+   例：click.stop	阻止事件继续传播		例：submit.prevent	阻止事件不再重载页面
+	.stop		阻止冒泡事件
+	.prevent		拦截默认事件
+	.capture		在捕获的过程监听，没有capture修饰符时都是默认冒泡过程监听。
+	.self		可以理解为跳过冒泡事件和捕获事件，只有直接作用在该元素上的事件才可以执行。
+	.once		点击事件将只会触发一次
+	.passive		不拦截默认事件
+
+v-on:click.left鼠标左键
+v-on:click.right 鼠标右键
+v-on:click.middle鼠标中键（滚轮键
+
+按键修饰符
+	.enter =>    enter键
+	.tab => tab键
+	.delete (捕获“删除”和“退格”按键) =>  删除键
+	.esc => 取消键
+	.space =>  空格键
+	.up =>  上
+	.down =>  下
+	.left =>  左
+	.right =>  右
+在Vue中可以通过`config.keyCodes`自定义按键修饰符别名
+	例： Vue.config.keyCodes.f5 = 116;
+
+ Vue.filter定义无参全局过滤器
+
+css过渡动画
+	v-enter	定义进入过渡的开始状态。在元素被插入之前生效，在元素被插入之后的下一帧移除。
+	v-enter-active定义进入过渡生效时的状态。在整个进入过渡的阶段中应用，在元素被插入之前生效，在过渡/动画完成之后移除。这个类可以被用来定义进入过渡的过程时间，延迟和曲线函数。
+	v-enter-to2.1.8版及以上 定义进入过渡的结束状态。在元素被插入之后下一帧生效 (与此同时 v-enter 被移除)，在过渡/动画完成之后移除。
+	v-leave	定义离开过渡的开始状态。在离开过渡被触发时立刻生效，下一帧被移除。
+	v-leave-active 定义离开过渡生效时的状态。在整个离开过渡的阶段中应用，在离开过渡被触发时立刻生效，在过渡/动画完成之后移除。这个类可以被用来定义离开过渡的过程时间，延迟和曲线函数。
+	v-leave-to2.1.8版及以上 定义离开过渡的结束状态。在离开过渡被触发之后下一帧生效 (与此同时 v-leave 被删除)，在过渡/动画完成之后移除。
+
+
+
+{{ number + 1 }}   <!-- 计算 -->
+{{ ok ? 'YES' : 'NO' }}   <!-- 单表达式选择 -->
+{{ message.split('').reverse().join('') }}  <!-- 单表达式运算 -->
+<div v-bind:id="'list-' + id"></div>  <!-- 字符串拼接 -->
+
+
+computed: {   }  计算属性；计算属性将被混入到 Vue 实例中
+	get: 获取计算属性
+	set: 设置计算属性
+`_.debounce` 是一个通过 Lodash 限制操作频率的函数。
+watch:{ } 侦听属性方法，来响应数据的变化。
+
+绑定 HTML Class
+	我们可以传给 v-bind:class 一个对象，动态地切换 class。<div v-bind:class="{ active: isActive }"></div>
+
+<template>元素可以当做不可见的包裹元素
+
+Prop 类型	  props 可以是数组或对象，用于接收来自父组件的数据。
+	props: ['title', 'likes', 'isPublished', 'commentIds', 'author']
+
+钩子函数
+	一个指令定义对象可以提供如下几个钩子函数 (均为可选)：
+	bind：只调用一次，指令第一次绑定到元素时调用。在这里可以进行一次性的初始化设置。
+	inserted：被绑定元素插入父节点时调用 (仅保证父节点存在，但不一定已被插入文档中)。
+	update：所在组件的 VNode 更新时调用，但是可能发生在其子 VNode 更新之前。指令的值可能发生了改变，也可能没有。但是你可以通过比较更新前后的值来忽略不必要的模板更新。
+	componentUpdated：指令所在组件的 VNode 及其子 VNode 全部更新后调用。
+	unbind：只调用一次，指令与元素解绑时调用。
+
+钩子函数参数	指令钩子函数会被传入以下参数：
+	el：指令所绑定的元素，可以用来直接操作 DOM 。
+	binding：一个对象，包含以下属性：
+            		name：指令名，不包括 v- 前缀。
+		value：指令的绑定值，例如：v-my-directive="1 + 1" 中，绑定值为 2。
+		oldValue：指令绑定的前一个值，仅在 update 和 componentUpdated 钩子中可用。无论值是否改变都可用。   
+		expression：字符串形式的指令表达式。例如 v-my-directive="1 + 1" 中，表达式为 "1 + 1"。
+		arg：传给指令的参数，可选。例如 v-my-directive:foo 中，参数为 "foo"。
+		modifiers：一个包含修饰符的对象。例如：v-my-directive.foo.bar 中，修饰符对象为 { foo: true, bar: true }。
+	vnode：Vue 编译生成的虚拟节点。
+	oldVnode：上一个虚拟节点，仅在 update 和 componentUpdated 钩子中可用。
+	除了 el 之外，其它参数都应该是只读的
+
+duration 属性定制一个显性的过渡持续时间 (以毫秒计)：
+	例：定制一个显性的过渡持续时间 <transition :duration="1000">...</transition>
+	例：定制进入和移出的持续时间：<transition :duration="{ enter: 500, leave: 800 }">...</transition>
+
+JavaScript 钩子
+	可以在属性中声明 JavaScript 钩子
+	<transition
+	  	v-on:before-enter="beforeEnter"
+	  	v-on:enter="enter"
+		v-on:after-enter="afterEnter"
+		v-on:enter-cancelled="enterCancelled"
+		v-on:before-leave="beforeLeave"
+		v-on:leave="leave"
+ 		v-on:after-leave="afterLeave"
+		v-on:leave-cancelled="leaveCancelled"> 	
+	 <!-- ... -->
+	</transition>
+推荐对于仅使用 JavaScript 过渡的元素添加 v-bind:css="false"，Vue 会跳过 CSS 的检测。这也可以避免过渡过程中 CSS 的影响。
+
+Vue.component 来创建组件：
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

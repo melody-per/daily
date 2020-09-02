@@ -13,12 +13,12 @@
             margin: 10px;
         }
 
-        .red {
-            background-color: red;
-        }
-
         .blue {
             background-color: blue;
+        }
+
+        .red {
+            background-color: red;
         }
     </style>
 </head>
@@ -27,6 +27,8 @@
     <div id="app">
         <div v-bind:class="{box:a,red:b,blue:c}"></div>
         <div class="box" v-bind:class="{red:b1,blue:c1}"></div>
+        <div class="box" v-bind:class="[red,blue]"></div>
+        <div class="box" v-bind:class="['blue','red']"></div>
     </div>
     <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
     <script>
@@ -37,7 +39,9 @@
                 b: 0,
                 c: 1,
                 b1: 1,
-                c1: 0
+                c1: 0,
+                red: 0,
+                blue: 'blue'
             },
             methods: {},
         })

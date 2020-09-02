@@ -10,29 +10,30 @@
 
 <body>
     <div id="app">
-        <input type="text" value="" /><br />
-        <input type="text" value="" class="p">
+        <input type="text" value="" class="p1"><br />
+        <input type="text" value="" class="p2">
     </div>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script> -->
     <script>
-        var val = document.querySelector("input");
-        var p = document.querySelector(".p");
+        var p1 = document.querySelector(".p1");
+        var p2 = document.querySelector(".p2");
         var obj = {
             a: 10
         };
         Object.defineProperty(obj, 'a', {
             get() {
-                // return a;
+                return a;
             },
             set(newValue) {
-                // console.log(obj.a);
-                console.log(newValue);
-                val.value = newValue;
-                // obj.a = newValue
-                p.value = newValue;
+                a = newValue;
+                console.log(a);
+                p1.value = a;
+                p2.value = a;
             },
         });
-        val.oninput = function (e) {
+        p1.oninput = function (e) {
+            obj.a = e.target.value
+        }
+        p2.oninput = function (e) {
             obj.a = e.target.value
         }
     </script>
