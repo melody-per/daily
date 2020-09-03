@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <div>id <input type="text" v-model='id'></div>
+        <div>
+            name <input type="text" v-model='name'>
+            <button v-on:click='add'>新增</button>
+        </div>
+
+        <hr>
+
+        <ul>
+            <li v-for='item in arr' v-bind:key='item.id'>
+                <input type="checkbox"><span>{{item.name}}</span>
+
+            </li>
+        </ul>
+    </div>
+    <script src='js/vue.js'></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                id: '',
+                name: '',
+                arr: [{
+                        id: 0,
+                        name: '孙子'
+                    }, {
+                        id: 1,
+                        name: '孙悟空'
+                    }, {
+                        id: 2,
+                        name: '孙侯子'
+                    }
+
+                ]
+            },
+            methods: {
+                add: function() {
+                    this.arr.unshift({
+                        id: this.id,
+                        name: this.name
+                    })
+                    console.log(this.id);
+
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>
