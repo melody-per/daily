@@ -66,8 +66,8 @@
     <!-- 自定义一个指令,获取某时间到现在的间隔(类似微信) -->
     <div id="app" v-cloak>
         <div class="box">
-            <input type="text" id="ipt" placeholder="2020-9-3 21:58:20发布,可修改测试" v-model="ipt">
-            <button @click="btn">测试</button>
+            <!-- <input type="text" id="ipt" placeholder="2020-9-3 21:58:20发布,可修改测试">
+            <button @click="btn">测试</button> -->
             <img src="http://img7.dl.ltimg.net/emoji/egg/5ddf7feb25495910c033a64b?imageView2/1/w/300/h/300" alt="">
             <!-- <input type="hidden" name="" id="" v-model="msg"> -->
             <p> <strong>旋风小子</strong>&nbsp;&nbsp; <span v-abc="msg1"></span> </p>
@@ -90,7 +90,6 @@
     </div>
     <script src='vue.js'></script>
     <script>
-        // var inp = document.querySelector('#ipt').value || "2020-9-3 21:58:20"
         var date1 = +new Date('2020-9-3 21:58:20')
         var date2 = +new Date('2020-9-2 23:20:20')
         var date3 = +new Date('2020-9-1 20:20:20')
@@ -105,9 +104,11 @@
 
                 function time() {
                     newDate = +new Date()
+
                     var num = (newDate - binbing.value) / 1000 / 60 / 60
+                    // console.log(num);
                     if (num / 24 >= 30) {
-                        el.innerHTML = Math.floor(num / 24 / 30) + '月前发布'
+                        el.innerHTML = Math.floor(num / 24) + '天前发布'
                     } else if (num / 24 >= 1) {
                         el.innerHTML = Math.floor(num / 24) + '天前发布'
                     } else if (num >= 1) {
@@ -115,8 +116,9 @@
                     } else {
                         el.innerHTML = Math.floor(num * 60) + '分钟前发布'
                     }
+
                 }
-                setInterval(time, 5000)
+                setInterval(time, 1000)
             }
 
         })
@@ -128,19 +130,11 @@
                 msg2: date2,
                 msg3: date3,
                 msg4: date4,
-                ipt: '',
             },
             methods: {
 
-                btn() {
-                    this.msg1 = +new Date(this.ipt)
-                    console.log(this.msg1);
-                    console.log(this.msg2);
-                }
             },
-            computed: {
-
-            },
+            computed: {},
         })
     </script>
 </body>
