@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+
+        <input type="text" v-model='inpmsg'>{{inpmsg}}
+        <hr>
+        <!-- 单选按钮  多个单选按钮  绑定的是数组 -->
+        <input type="radio" v-model='sex' value='男'>男
+        <input type="radio" v-model='sex' value="女">女 {{sex}}
+        <hr>
+        <!-- 复选框  单个复选框   绑定到布尔值 -->
+        <input type="checkbox" v-model='check'>{{check}}
+        <hr>
+        <!-- 复选框  多个复选框   绑定到数组 -->
+        <input type="checkbox" v-model='hobby' value='basketball'>basketball
+        <input type="checkbox" v-model='hobby' value='soccer'>soccer
+        <input type="checkbox" v-model='hobby' value='volleyball'>volleyball {{hobby}}
+        <hr>
+        <!-- 下拉列表   选中单个绑定到option项具体的值 -->
+        <select v-model='fruit1'>
+            <option value="apple">apple</option>
+            <option value="lemon">lemon</option>
+            <option value="pear">pear</option>
+            <option value="strawberry">strawberry</option>
+        </select> {{fruit1}}
+        <hr>
+        <!-- 下拉列表   选中多个绑定到option项具体的值 -->
+        <select v-model='fruit2' multiple>
+                <option value="apple">apple</option>
+                <option value="lemon">lemon</option>
+                <option value="pear">pear</option>
+                <option value="strawberry">strawberry</option>
+            </select> {{fruit2}}
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                inpmsg: "一花一世界",
+                sex: '',
+                check: false,
+                hobby: [],
+                fruit1: '',
+                fruit2: []
+            },
+            methods: {},
+        })
+    </script>
+</body>
+
+</html>
