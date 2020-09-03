@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        #app {
+            width: 500px;
+            height: 550px;
+            border: 2px solid black;
+            margin: 30px auto;
+            padding: 20px 50px;
+        }
+
+        [v-cloak] {
+            display: none;
+        }
+
+        strong {
+            font-size: 22px;
+        }
+
+        .box {
+            position: relative;
+            border-bottom: 1px solid red;
+            display: inline-block;
+            width: 220px;
+            height: 220px;
+        }
+
+        img {
+            padding-top: 45px;
+            width: 130px;
+        }
+
+        .box:nth-child(2n) {
+            margin-left: 50px;
+        }
+
+        #ipt {
+            position: absolute;
+            padding: 3px;
+            width: 210px;
+            height: 20px;
+        }
+
+        button {
+            position: absolute;
+            left: 220px;
+            width: 50px;
+            text-align: center;
+            height: 26px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 自定义一个指令,获取某时间到现在的间隔(类似微信) -->
+    <div id="app" v-cloak>
+        <div class="box">
+            <input type="text" id="ipt" placeholder="2020-9-3 21:58:20发布,可修改测试" v-model="ipt">
+            <button @click="btn">测试</button>
+            <img src="http://img7.dl.ltimg.net/emoji/egg/5ddf7feb25495910c033a64b?imageView2/1/w/300/h/300" alt="">
+            <!-- <input type="hidden" name="" id="" v-model="msg"> -->
+            <p> <strong>旋风小子</strong>&nbsp;&nbsp; <span v-abc="msg1"></span> </p>
+        </div>
+        <div class="box">
+            <img src="http://img7.dl.ltimg.net/emoji/egg/5b35edd42549591268545d20?imageView2/1/w/300/h/300" alt="">
+            <!-- <input type="hidden" name="" id="" v-model="msg"> -->
+            <p> <strong>小窝</strong>&nbsp;&nbsp; <span v-abc="msg2"></span> </p>
+        </div>
+        <div class="box">
+            <img src="http://img7.dl.ltimg.net/emoji/egg/5c0f8ac32549591e065b4e3d?imageView2/1/w/300/h/300" alt="">
+            <!-- <input type="hidden" name="" id="" v-model="msg"> -->
+            <p> <strong>急速钢铁</strong>&nbsp;&nbsp; <span v-abc="msg3"></span> </p>
+        </div>
+        <div class="box">
+            <img src="http://img7.dl.ltimg.net/emoji/egg/5edf6b832549597b577da9ae?imageView2/1/w/300/h/300" alt="">
+            <!-- <input type="hidden" name="" id="" v-model="msg"> -->
+            <p> <strong>急速钢铁</strong>&nbsp;&nbsp; <span v-abc="msg4"></span> </p>
+        </div>
+    </div>
+    <script src='vue.js'></script>
+    <script>
+        // var inp = document.querySelector('#ipt').value || "2020-9-3 21:58:20"
+        var date1 = +new Date('2020-9-3 21:58:20')
+        var date2 = +new Date('2020-9-2 23:20:20')
+        var date3 = +new Date('2020-9-1 20:20:20')
+        var date4 = +new Date('2020-8-1 20:20:20')
+
+        var newDate;
+        // console.log((+new Date() - date1) / 1000 / 60);
+
+        Vue.directive("abc", {
+            inserted(el, binbing) {
+                time()
+
+                function time() {
+                    newDate = +new Date()
+                    var num = (newDate - binbing.value) / 1000 / 60 / 60
+                    if (num / 24 >= 30) {
+                        el.innerHTML = Math.floor(num / 24 / 30) + '月前发布'
+                    } else if (num / 24 >= 1) {
+                        el.innerHTML = Math.floor(num / 24) + '天前发布'
+                    } else if (num >= 1) {
+                        el.innerHTML = Math.floor(num) + '小时前发布'
+                    } else {
+                        el.innerHTML = Math.floor(num * 60) + '分钟前发布'
+                    }
+                }
+                setInterval(time, 5000)
+            }
+
+        })
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg1: date1,
+                msg2: date2,
+                msg3: date3,
+                msg4: date4,
+                ipt: '',
+            },
+            methods: {
+
+                btn() {
+                    this.msg1 = +new Date(this.ipt)
+                    console.log(this.msg1);
+                    console.log(this.msg2);
+                }
+            },
+            computed: {
+
+            },
+        })
+    </script>
+</body>
+
+</html>

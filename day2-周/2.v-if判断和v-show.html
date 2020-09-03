@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <ul>
+            <li v-if="msg>=90"> 优秀</li>
+            <li v-else-if="msg<90&&msg>=80"> 良好</li>
+            <li v-else-if="msg<80&&msg>=60"> 一般</li>
+            <li v-else="msg<60"> 不及格</li>
+        </ul>
+        <div v-show="msg2">回家挨打吧</div>
+    </div>
+    <script src='./vue.js'></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                msg: 81,
+            },
+            methods: {
+
+            },
+        })
+    </script>
+</body>
+
+</html>

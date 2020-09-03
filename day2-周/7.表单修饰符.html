@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- .lazy -->
+        <input type="text " v-model.lazy="msg1">{{msg1}}
+        <br>
+        <!-- .number 转换成数值类型 -->
+        <input type="text " v-model.number="msg2">{{typeof msg2}}
+        <br>
+        <!-- .trim去除两端空格 -->
+        <input type="text " v-model.trim="msg3">{{msg3.length}}
+
+    </div>
+    <script src='vue.js'></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                msg1: '',
+                msg2: '',
+                msg3: '',
+            },
+            methods: {},
+        })
+    </script>
+</body>
+
+</html>
