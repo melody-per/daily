@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <div>水果列表</div>
+        <ul>
+            <!-- :key属性绑定一定伴随着v-for指令一起出现 -->
+            <li v-for="item in fruits">{{item}}</li>
+            <li v-for="(item,index) in fruits">{{item+"--------"+index}}</li>
+            <li :key='item.id' v-for="(item,index) in fruit1">{{item.name+"--------"+index}}</li>
+        </ul>
+    </div>
+    <script src='../../vue.js'></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                fruits: ['apple', '橘子', '香蕉'],
+                fruit1: [{
+                    id: 1,
+                    name: '榴莲'
+                }, {
+                    id: 2,
+                    name: '西瓜'
+                }, {
+                    id: 3,
+                    name: '柠檬'
+                }, {
+                    id: 4,
+                    name: '草莓'
+                },]
+            },
+            methods: {},
+        })
+    </script>
+</body>
+
+</html>

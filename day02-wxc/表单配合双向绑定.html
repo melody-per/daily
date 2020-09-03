@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <input type="radio" v-model="check1">
+        <hr>
+        <input type="radio" value="0" v-model="sex">男
+        <input type="radio" value="1" v-model="sex">女 {{sex}}
+        <hr>
+        <input type="checkbox" value="aa" v-model="hobby">音乐
+        <input type="checkbox" value="bb" v-model="hobby">电影
+        <input type="checkbox" value="cc" v-model="hobby">动漫
+        {{hobby}}
+        <hr>
+        <select v-model="slt">
+            <option value="1">上海</option>
+            <option value="2">南京</option>
+            <option value="3">合肥</option>
+            <option value="4">枞阳</option>
+            <option value="5">汉中</option>
+            <option value="6">西安</option>
+            <option value="7">成都</option>
+        </select>
+        {{slt}}
+        <hr>
+        <select v-model="slt1" multiple>
+            <option value="1">上海</option>
+            <option value="2">南京</option>
+            <option value="3">合肥</option>
+            <option value="4">枞阳</option>
+            <option value="5">汉中</option>
+            <option value="6">西安</option>
+            <option value="7">成都</option>
+        </select>
+        {{slt1}}
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                check1: false,
+                sex: '',
+                hobby: [],
+                slt: '5',
+                slt1: []
+            },
+            methods: {},
+        })
+    </script>
+</body>
+
+</html>
