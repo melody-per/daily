@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Honey!❤🎈</title>
+</head>
+<body>
+  <!--? 引入容器 app -->
+    <div id='app'>
+         <!-- 文本域 -->
+         <textarea  v-model="msg"></textarea>{{msg}}
+         <hr>
+        <input type="text" value='22' v-model="hobby">
+        <!-- 双向绑定的特点  获取 -->
+        <input type="checkbox" v-model="hobby" value="1">one
+        <input type="checkbox" v-model="hobby" value="2">two
+        <input type="checkbox" v-model="hobby" value="3">three
+        <input type="checkbox" v-model="hobby" value="4">four
+        {{hobby}}
+        <hr>
+
+        <!-- 下拉列表 -->
+        <select v-model='language'>
+
+            <option value="1">英文</option>
+            <option value="2">中文</option>
+            <option value="3">日文</option>
+            <option value="4">韩文</option>
+
+        </select>
+        {{language}}
+
+        <hr>    
+        <!-- 下拉列表  多选 -->
+        <select v-model='language1' multiple>
+
+            <option value="1">英文</option>
+            <option value="2">中文</option>
+            <option value="3">日文</option>
+            <option value="4">韩文</option>
+
+        </select>
+        {{language1}}
+        <hr>
+       
+</div>
+  <!--? 引入容器 Vue.js -->
+     <script src='./lib/Vue.js'></script> 
+    <script>
+  //去除控制台复杂信息
+  Vue.config.productionTip = false;
+ // TODO 引入数据 
+         const vm = new Vue({
+            el: '#app',
+            data:{  
+                //1-将每一个input的value值放进数组 , 选中则添加.未选中则去除
+                hobby:['1'],
+                // 2- 将所有的input状态同时绑定. 选中为1  未选中为0
+                // hobby:1
+                language:2,
+                // 将获取到的option的value值存到数组中
+                language1:[],
+                msg:''
+            },
+            methods:{
+             
+            },
+        })
+    </script>
+</body>
+</html>

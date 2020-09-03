@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Honey!❤🎈</title>
+</head>
+<body>
+  <!--? 引入容器 app -->
+    <div id='app'>
+        <input type="text" v-color="obj">
+</div>
+  <!--? 引入容器 Vue.js -->
+     <script src='./lib/Vue.js'></script> 
+    <script>
+  //去除控制台复杂信息
+  Vue.config.productionTip = false;
+ // TODO 引入数据 
+
+        //创建全局指令  只要new一个vue实例 都可以使用
+        Vue.directive('color',{
+            //bind 使用周期  binding为自定义的函数形参 
+            bind(el,binding) {
+                el.style.color = binding.value.color;
+                el.style.backgroundColor = binding.value.bgcolor;
+
+            }
+
+        })
+         const vm = new Vue({
+            el: '#app',
+            data:{  
+                obj:{
+                    color:'red',
+                    bgcolor:'#000'
+                }
+            },
+            methods:{
+             
+            },
+        })
+    </script>
+</body>
+</html>

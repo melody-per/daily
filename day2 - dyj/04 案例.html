@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Honey!❤🎈</title>
+</head>
+<body>
+    <!-- 效果:  输入框输入 id和value 点击新增时 渲染在li中 并且不影响复选框的状态-->
+
+    <!-- :key='item.id'  不添加会出现 当页面以unshift方式重新渲染后. 默认第一个id是新渲染的那条数据 -->
+  <!--? 引入容器 app -->
+    <div id='app'>
+        <input type="text"  v-model="id">
+        <input type="text"  v-model="name">
+        <button @click='handel'>新增</button>
+        <ul>
+            <li  v-for="item in arr" :key='item.id'>
+                <input type="checkbox" >
+                <span>{{item.name}}</span>
+                
+            </li>
+        </ul>
+</div>
+  <!--? 引入容器 Vue.js -->
+     <script src='./lib/Vue.js'></script> 
+    <script>
+  //去除控制台复杂信息
+  Vue.config.productionTip = false;
+ // TODO 引入数据 
+         var vm = new Vue({
+            el: '#app',
+            data:{  
+                arr:[{
+                    id:0,
+                    name: '孙',
+                    age:18
+                },
+                {
+                    id:1,
+                    name: '王',
+                    age:18
+
+                },
+                {
+                    id:2,
+                    name: '张',
+                    age:18
+
+                }]
+            },
+            methods:{
+               handel(){
+                   this.arr.unshift({
+                       id:this.id,
+                       name: this.name
+                   })
+               }
+            },
+        })
+    </script>
+</body>
+</html>

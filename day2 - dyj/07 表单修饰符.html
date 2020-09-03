@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Honey!❤🎈</title>
+</head>
+<body>
+  <!--? 引入容器 app -->
+    <div id='app'>
+        <!-- v-model.lazy lazy修饰符可以将input变成change事件  .失去焦点时更新{{msg}}  -->
+        <input type="text" v-model.lazy="msg">{{msg}}
+        <hr>
+        <!-- v-model.number 可以转化为数字型  需求: 数字相加求和  - * / 不用.自带隐式转换 -->
+        <input type="text" v-model.number="num">{{num + 1}}
+        <hr>
+        <!-- v-model.trim  去除两端空格 -->
+        <input type="text" v-model.trim="str">{{str.length}}
+        <hr>
+        
+</div>
+  <!--? 引入容器 Vue.js -->
+     <script src='./lib/Vue.js'></script> 
+    <script>
+  //去除控制台复杂信息
+  Vue.config.productionTip = false;
+ // TODO 引入数据 
+         const vm = new Vue({
+            el: '#app',
+            data:{  
+                msg:'',
+                num:'',
+                str:''
+            },
+            methods:{
+             
+            },
+        })
+    </script>
+</body>
+</html>

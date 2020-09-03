@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Honey!❤🎈</title>
+</head>
+<body>
+  <!--? 引入容器 app -->
+    <div id='app'>
+        <!-- for 遍历的是对象的键值对  -->
+        <div v-if="v==18" v-for="(v,k,i) in items">{{v + "--" + k + "--" + i}}</div>
+</div>
+  <!--? 引入容器 Vue.js -->
+     <script src='./lib/Vue.js'></script> 
+    <script>
+  //去除控制台复杂信息
+  Vue.config.productionTip = false;
+ // TODO 引入数据 
+         const vm = new Vue({
+            el: '#app',
+            data:{  
+             items:{
+                    uname:'zs',
+                    age:18,
+                    gender: 'nan'
+                },
+             obj: {
+
+                uname:'ls',
+                age:48
+             }
+
+             
+            },
+            methods:{
+             
+            },
+        })
+    </script>
+</body>
+</html>

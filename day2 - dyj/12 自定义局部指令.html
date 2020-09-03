@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Honey!❤🎈</title>
+</head>
+<body>
+  <!--? 引入容器 app -->
+    <div id='app'>
+        <input type="text" v-color="msg">
+        <input type="text" v-focus>
+</div>
+  <!--? 引入容器 Vue.js -->
+     <script src='./lib/Vue.js'></script> 
+    <script>
+  //去除控制台复杂信息
+  Vue.config.productionTip = false;
+ // TODO 引入数据 
+         const vm = new Vue({
+            el: '#app',
+            data:{  
+             msg:{
+                 color:'red'
+             }
+            },
+            methods:{
+             
+            },
+            //注意:  自定义局部 directives 有 s , 自定义全局指令 directive 没有s
+            directives:{
+                color:{
+                    bind(el,binding){
+                        console.log(binding);//是一个对象  作为参数接收调用回来的数据
+                        el.style.backgroundColor = binding.value.color
+                    }
+                },
+                focus:{
+                    inserted(el){
+                        el.focus()
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

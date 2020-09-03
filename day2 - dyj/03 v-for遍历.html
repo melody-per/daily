@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Honey!❤🎈</title>
+</head>
+<body>
+  <!--? 引入容器 app -->
+    <div id='app'>
+        <ul>
+            <!-- key 属性一定伴随v-for指令 必须要是唯一性  避免出现bug -->
+            <li v-for="(v,k,i) in arr1" :key='i'>{{v + "---" + k +"---" + i}}</li>
+        </ul>
+</div>
+  <!--? 引入容器 Vue.js -->
+     <script src='./lib/Vue.js'></script> 
+    <script>
+  //去除控制台复杂信息
+  Vue.config.productionTip = false;
+ // TODO 引入数据 
+         const vm = new Vue({
+            el: '#app',
+            data:{  
+            //  arr:[{
+            //     id:0,
+            //     name:"honey",
+            //     age:18
+            //  },
+            //  {
+            //     id:1,
+            //     name:"Caro",
+            //     age:18
+            //  },{
+            //     id:2,
+            //     name:"aa",
+            //     age:18
+            //  }]
+
+            ar1r:{
+              id:0,
+               name:"honey",
+              age:18
+            }
+             },
+              
+            methods:{
+             
+            },
+        })
+    </script>
+</body>
+</html>
