@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <input type="text" v-model="msg"> {{msg}}
+        <input type="radio" v-model='gender' value="0"> 男
+        <input type="radio" v-model='gender' value="1"> 女 {{gender}}
+        <input type="checkbox" v-model="hobby" value="吃饭"> 吃饭
+        <input type="checkbox" v-model="hobby" value="睡觉"> 睡觉
+        <input type="checkbox" v-model="hobby" value="喝水"> 喝水 {{hobby}}
+        <select v-model="city">
+            <option value="0">上海</option>
+            <option value="1" >北京</option>
+            <option value="2">天津</option>
+            <option value="3">深圳</option> 
+        </select> {{city}}
+        <select v-model="city2" multiple>
+            <option value="0">上海</option>
+            <option value="1" >北京</option>
+            <option value="2">天津</option>
+            <option value="3">深圳</option> 
+        </select> {{city2}}
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                msg: '123',
+                gender: '0',
+                hobby: ['吃饭'],
+                city: '0',
+                city2: []
+            },
+            methods: {},
+        })
+    </script>
+</body>
+
+</html>
