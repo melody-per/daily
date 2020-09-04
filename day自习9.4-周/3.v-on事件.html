@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <button v-on:click="msg" v-html="num">+</button>
+        <!-- 简写为@ -->
+        <button @click="msg1" v-html="num1">-</button>
+        <br>事件修饰<br>
+        添加.once事件修饰符,只能加1次<button @click.once="msg2" v-html="num2">-</button><br>
+
+        添加.stop可以阻止冒泡 <br>
+        添加.prevent可以阻止默认事件
+
+    </div>
+    <script src='vue.js'></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                num: 0,
+                num1: 30,
+                num2: 30,
+            },
+            methods: {
+                msg() {
+                    this.num += 1
+                },
+                msg1() {
+                    this.num1 -= 1
+                },
+                msg2() {
+                    this.num2 += 10
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

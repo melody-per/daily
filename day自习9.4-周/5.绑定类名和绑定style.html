@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            float: left;
+            width: 100px;
+            height: 100px;
+            border: 1px solid red;
+        }
+
+        .wh {
+            width: 150px;
+            height: 150px;
+        }
+
+        .bgcolorb {
+            background-color: blue;
+        }
+
+        .bgcolorr {
+            background-color: red;
+        }
+
+        .mgin {
+            margin: 5px;
+        }
+    </style>
+</head>
+<script src="./vue.js"></script>
+
+<body>
+    <div id="app">
+        <div class="box" :class="{wh:'wh',bgcolorb:'bgcolorb'}">1</div>
+        <div class="box" :class="msg">2</div>
+        <div class="box" :class="[mgin,wh,bgcolorb]">3</div>
+        <div class="box" :class="['mgin','bgcolorr']">4</div>
+        <div class="box" :class="['mgin','bgcolorr','wh']" :style="sty">4:绑定style</div>
+    </div>
+</body>
+<script>
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            wh: 'wh',
+            bgcolorb: 'bgcolorb',
+            mgin: 'mgin',
+            msg: {
+                wh: 'wh',
+                bgcolorr: 'bgcolorr',
+                mgin: 'mgin'
+            },
+            sty: {
+                backgroundColor: 'pink',
+                width: '222px',
+                border: '15px solid yellow'
+            }
+        }
+    })
+</script>
+
+</html>

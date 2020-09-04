@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="app">
+        <p v-text="msg"></p>
+        <p>{{msg}}</p>
+        <p v-html="msg2"></p>
+        <p>{{msg2}}</p>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        const vm = new Vue({
+            el: '.app',
+            data: {
+                msg: '我是v-text,<span>我无法渲染标签</span>',
+                msg2: '<strong>我是v-html,在元素内我可以带标签渲染,差值无法渲染标签</strong>'
+
+            }
+        })
+    </script>
+</body>
+
+</html>

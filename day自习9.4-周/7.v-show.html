@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <ul>
+            <li v-for="(item,index) in arr" :key="index">{{item.a}}{{item.b}} ----下标{{index}}</li>
+        </ul>
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                arr:[
+                    {a:1,b:'一'},
+                    {a:2,b:'二'},
+                    {a:3,b:'三'},
+                    {a:4,b:'四'},
+                    {a:5,b:'五'},
+                ]
+            },
+            methods: {},
+        })
+    </script>
+</body>
+
+</html>
