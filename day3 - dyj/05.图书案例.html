@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+  <style type="text/css">
+    .grid {
+      margin: auto;
+      width: 530px;
+      text-align: center;
+    }
+
+    .grid table {
+      border-top: 1px solid #C2D89A;
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .grid th,
+    td {
+      padding: 10;
+      border: 1px dashed #F3DCAB;
+      height: 35px;
+      line-height: 35px;
+    }
+
+    .grid th {
+      background-color: #F3DCAB;
+    }
+
+    .grid .book {
+      padding-bottom: 10px;
+      padding-top: 5px;
+      background-color: #F3DCAB;
+    }
+
+    .grid .total {
+      height: 30px;
+      line-height: 30px;
+      background-color: #F3DCAB;
+      border-top: 1px solid #C2D89A;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div class="grid">
+      <div>
+        <h1>图书管理</h1>
+        <div class="book">
+          <div>
+            <label for="id"> 编号： </label> <input type="text" id="id" v-model='id' v-focus />
+            <label for="name"> 名称： </label>
+            <input type="text" id="name" v-model='name' />
+            <!-- 名字重复后禁用 -->
+            <button @click="handeler" :disabled="isSubmit">提交</button>
+          </div>
+        </div>
+      </div>
+      <div class="total"><span>图书总数：</span> <span>{{books.length}}</span></div>
+      <table>
+        <thead>
+          <tr>
+            <th>编号</th>
+            <th>名称</th>
+            <th>时间</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in books">
+            <td>{{item.id}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.data | dateFormate('yyyy-MM-DD hh:mm:ss')}}</td>
+            <td>
+              <a href="javascript:;" @click="deletebooks(item.id)">删除</a> |
+              <a href="javascript:;" @click="editbooks(item.id)">修改</a>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+  <script src="http://cdn.staticfile.org/moment.js/2.24.0/moment.js"></script>
+
+  <script>
+    //1-- 创建过滤器
+    Vue.filter('dateFormate', (val, prams) => {
+      const date = new Date();
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      const day = date.getDay();
+      const h = date.getHours();
+      const m = date.getMinutes();
+      const s = date.getSeconds();
+
+      return `${year}-${month}-${day}  ${h}:${m}:${s}`
+    })
+
+    //定义自动聚焦
+    Vue.directive('focus', {
+      inserted(el) {
+        el.focus();
+      }
+    })
+
+    new Vue({
+      el: "#app",
+      data: {
+        //  定义一个空id和name
+        id: '',
+        name: '',
+        isEdit: false,
+        books:'',
+        isSubmit:false,
+      },
+      created() {
+        const data = 
+          [{
+              id: 1,
+              name: '三国',
+              data: ""
+            },
+            {
+              id: 2,
+              name: '水浒',
+              data: ''
+            },
+            {
+              id: 3,
+              name: '红楼',
+              data: ''
+            },
+            {
+              id: 4,
+              name: '西游',
+              data: ''
+            }];
+          
+      return  this.books = data
+      },
+
+      methods: {
+        //增
+        handeler() {
+          if (!this.name) return;
+          //1- 渲染数据
+
+          //思路: 设置起始状态 isEdit == false此时就是正常提交状态   否则就是点击修改的状态
+          if (this.isEdit == false) {
+            //添加的数据以对象的形式push进books中
+            this.books.push({
+              //this.books.length - 1 --> 最后一个数据的id 
+              //最后一id加1 添加进列表中
+              id: this.books.length ? this.books[this.books.length - 1].id + 1 : 1,
+              name: this.name,
+              data: +new Date()
+            });
+          } else {
+            this.books.some((item) => {
+              if (item.id == this.id) {
+                item.name = this.name;
+                return true;
+              }
+            });
+
+            this.isEdit = false;
+          }
+
+          this.id = this.name = ''
+        },
+
+        //删
+        deletebooks(id) {
+          //1- 用findIndex 方法 删除
+          // const index = this.books.findIndex((item)=>item.id == id) ;
+          // console.log(index);
+          // //截取数组
+          // this.books.splice(index,1);
+          // const index = this.books.fondIndex(function(item){
+          //   item.id == id;
+          // })
+
+          //2- filter过滤方法 删除
+          this.books = this.books.filter(item => item.id != id);
+        },
+
+        //改
+        editbooks(id) {
+          //当点击修改内容时, 修改isEdit状态
+          this.isEdit = true;
+          //利用过滤 如果接收过来的参数(id) 和 item.id 相等 就获取该图书信息 
+          const res = this.books.filter((item) => item.id == id);
+          //赋值
+          this.id = res[0].id;
+          this.name = res[0].name;
+        }
+      },
+
+      watch:{
+        name(val){
+          //some 得到的是布尔值  把得到的布尔状态赋值给isSubmit
+          this.isSubmit = this.books.some((item) => item.name == val);
+
+        }
+      }
+
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+         <style type="text/css">
+    .grid {
+      margin: auto;
+      width: 530px;
+      text-align: center;
+    }
+    .grid table {
+      border-top: 1px solid #C2D89A;
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .grid th,td {
+      padding: 10;
+      border: 1px dashed #F3DCAB;
+      height: 35px;
+      line-height: 35px;
+    }
+    .grid th {
+      background-color: #F3DCAB;
+    }
+    .grid .book {
+      padding-bottom: 10px;
+      padding-top: 5px;
+      background-color: #F3DCAB;
+    }
+    .grid .total {
+      height: 30px;
+      line-height: 30px;
+      background-color: #F3DCAB;
+      border-top: 1px solid #C2D89A;
+    }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="grid">
+        <div>
+          <h1>图书管理</h1>
+          <div class="book">
+            <div>
+              <label for="id"> 编号： </label> <input type="text" id="id" />
+              <label for="name"> 名称： </label>
+              <input type="text" id="name" /> <button>提交</button>
+            </div>
+          </div>
+        </div>
+        <div class="total"><span>图书总数：</span> <span>4</span></div>
+        <table>
+          <thead>
+            <tr>
+              <th>编号</th>
+              <th>名称</th>
+              <th>时间</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in books">
+             <td>{{item.id}}</td>
+             <td>{{item.name}}</td>
+             <td>{{item.id}}</td>
+             <td>
+
+             </td>
+            </tr>
+         
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+         books:''
+        },
+        methods: {},
+        created(){
+          const data =[{
+            id: 1,
+              name: '三国',
+              data: ""
+            },
+            {
+              id: 2,
+              name: '水浒',
+              data: ''
+            },
+            {
+              id: 3,
+              name: '红楼',
+              data: ''
+            },
+            {
+              id: 4,
+              name: '西游',
+              data: ''
+          }];
+
+        }
+      });
+    </script>
+  </body>
+</html>

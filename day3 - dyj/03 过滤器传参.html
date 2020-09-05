@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Honey!❤🎈</title>
+</head>
+<body>
+  <!--? 引入容器 app -->
+    <div id='app'>
+        <!-- 2-- 引入过滤器 -->
+        <div>{{time | dateFormate("MMMM-YYYY-DD h:mm:ss ") }}</div>
+       
+        <!-- 引入第二个过滤器 此时以dateFormate作为参数传入数据 -->
+        <div>{{time | dateFormate | str}}</div>
+</div>
+  <!--? 引入容器 Vue.js -->
+     <script src='./lib/Vue.js'></script> 
+     <script src="http://cdn.staticfile.org/moment.js/2.24.0/moment.js"></script>
+    <script>
+  //去除控制台复杂信息
+  Vue.config.productionTip = false;
+  //引入moment.js的时间模板
+   console.log(moment(new Date).startOf('day').fromNow()) 
+
+  //1-- 创建过滤器
+  Vue.filter('dateFormate',(val,prams)=>{
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth()+1;
+    const day = date.getDay();
+    return `${year}-${month}-${day}`
+  })
+
+  //3- 创建第二个过滤器
+  Vue.filter('str',(val)=>{
+      return '今天是' + val
+  })
+ // TODO 引入数据 
+         const vm = new Vue({
+            el: '#app',
+            data:{  
+             time:1599273384835,
+            },
+            methods:{
+             
+            },
+        })
+    </script>
+</body>
+</html>

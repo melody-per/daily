@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+  <style type="text/css">
+    .grid {
+      margin: auto;
+      width: 530px;
+      text-align: center;
+    }
+
+    .grid table {
+      border-top: 1px solid #C2D89A;
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .grid th,
+    td {
+      padding: 10;
+      border: 1px dashed #F3DCAB;
+      height: 35px;
+      line-height: 35px;
+    }
+
+    .grid th {
+      background-color: #F3DCAB;
+    }
+
+    .grid .book {
+      padding-bottom: 10px;
+      padding-top: 5px;
+      background-color: #F3DCAB;
+    }
+
+    .grid .total {
+      height: 30px;
+      line-height: 30px;
+      background-color: #F3DCAB;
+      border-top: 1px solid #C2D89A;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div class="grid">
+      <div>
+        <h1>图书管理</h1>
+        <div class="book">
+          <div>
+            <label for="id"> 编号： </label>
+            <input type="text" id="id" v-model="id" v-focus/>
+            <label for="name"> 名称： </label>
+            <input type="text" id="name" v-model="name" />
+            <button @click='handel' :disabled="isSubmit">提交</button>
+          </div>
+        </div>
+      </div>
+      <div class="total"><span>图书总数：</span> <span>4</span></div>
+      <table>
+        <thead>
+          <tr>
+            <th>编号</th>
+            <th>名称</th>
+            <th>时间</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in books">
+            <td>{{item.id}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.time}}</td>
+            <td>
+              <a href="javascript:;" @click='deletebooks(item.id)'>删除</a> |
+              <a href="javascript:;" @click="edit(item.id)">修改</a>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+  <script>
+
+    //自动聚焦
+ Vue.directive('focus',{
+   inserted(el){
+     el.focus();
+   }
+ })
+
+
+
+    new Vue({
+      el: "#app",
+
+      data: {
+        //定义一个空的id和name 与编号和名称的input框用v-model进行双向绑定
+        id: '',
+        name: '',
+        books: '',
+        time: '',
+        isEdit: false,
+        isSubmit: false
+      },
+      methods: {
+        //增  通过push方法将获取到的信息以对象模式推进data里的books
+        handel() {
+
+          //isEdit为false时. 以增加书名的逻辑走
+          if (this.isEdit == false) {
+            //通过push方法将获取到的信息以对象模式推进data里的books
+            this.books.push({
+              //id:  this.books[this.books.length - 1].id--->最后一个书名的id 
+              //有最后一个id名则加1  没有则id为1
+              id: this.books.length ? this.books[this.books.length - 1].id + 1 : 1,
+              name: this.name,
+              date: new Date()
+            });
+          }else{
+            //isEdit
+            this.books.some((item)=>{
+              if(item.id == this.id){
+                item.name = this.name;
+                return  true;
+              }
+            });
+
+            this.isEdit = false;
+          }
+          this.id = this.name = ''
+        },
+
+        //删  
+        deletebooks(id) {
+          //利用filter(function(渲染的内容,[index],callback() ))方法  将接收到的参数(id)与thisbooks里的id进行判断  过滤出id不相等的内容并重新赋值给this.books
+
+          this.books = this.books.filter((item) => item.id != id);
+
+        },
+
+        //改
+        edit(id) {
+          isEdit: true;
+          //思路:  filter过滤item  拿出 传递过来的参数(id)等于该data里的books的id 的数据
+          //注:  filter以数组形式返回 
+          const res = this.books.filter((item) => item.id == id);
+          console.log(res); //得到的该数据的数组
+          this.id = res[0].id; //
+          this.name = res[0].name
+        }
+      },
+
+      //侦听器  
+      watch:{
+        //当name的val值变化时启动侦听器  
+       name(val){
+         //some() 用于检测数组中的元素是否满足指定条件 得到的是布尔值
+         //
+         this.isSubmit = this.books.some((item)=>item.name == val);
+       }
+      },
+
+      //渲染;  用钩子函数的created 加载数据  再赋值给books  
+      created() {
+        const a = [{
+            id: 1,
+            name: '三国',
+            data: ""
+          },
+          {
+            id: 2,
+            name: '水浒',
+            data: ''
+          },
+          {
+            id: 3,
+            name: '红楼',
+            data: ''
+          },
+          {
+            id: 4,
+            name: '西游',
+            data: ''
+          }
+        ];
+        this.books = a
+      }
+    });
+
+  </script>
+</body>
+
+</html>
