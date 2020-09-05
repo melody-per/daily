@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+    <style type="text/css">
+        .grid {
+            margin: auto;
+            width: 530px;
+            text-align: center;
+        }
+        
+        .grid table {
+            border-top: 1px solid #C2D89A;
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .grid th,
+        td {
+            padding: 10;
+            border: 1px dashed #F3DCAB;
+            height: 35px;
+            line-height: 35px;
+        }
+        
+        .grid th {
+            background-color: #F3DCAB;
+        }
+        
+        .grid .book {
+            padding-bottom: 10px;
+            padding-top: 5px;
+            background-color: #F3DCAB;
+        }
+        
+        .grid .total {
+            height: 30px;
+            line-height: 30px;
+            background-color: #F3DCAB;
+            border-top: 1px solid #C2D89A;
+        }
+        
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <div class="grid">
+            <div>
+                <h1>图书管理</h1>
+                <div class="book">
+                    <div><label for="id"> 编号： </label> <input type="text" id="id" v-model='id'> <label for="name"> 名称： </label> <input type="text" id="name" v-model='name' v-focus> <button @click='add' :disabled='istrue'>提交</button></div>
+                </div>
+            </div>
+            <div class="total"><span>图书总数：</span> <span>{{books.length}}</span>计算属性：{{books.length}}</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>名称</th>
+                        <th>时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for='item in books' :key='item.id'>
+                        <td>{{item.id}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.date}}</td>
+                        <td><a href="#" @click.prevent='edit(item.id)'>修改</a> <span>|</span> <a href="#" @click.prevent='del(item.id)'>删除</a></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        Vue.directive('focus', {
+            inserted(el) {
+                el.focus()
+            }
+        });
+        new Vue({
+            el: '#app',
+            data: {
+                id: '',
+                name: '',
+                flag: false,
+                istrue: false,
+                books: [{
+                    id: 1,
+                    name: '彷徨',
+                    date: '',
+                }, {
+                    id: 2,
+                    name: '活着',
+                    date: '',
+                }, {
+                    id: 3,
+                    name: '呐喊',
+                    date: '',
+                }]
+            },
+            watch: {
+                name(val) {
+                    this.istrue = this.books.some((item) => {
+                        return item.name == val;
+                    })
+                }
+            },
+            methods: {
+                //添加数据
+                add() {
+                    if (this.flag == false) {
+                        //获取当前的id和name
+                        console.log(this.id);
+                        console.log(this.name);
+                        //向books数组里面添加数据，books数组会自动被遍历渲染到页面
+                        this.books.push({
+                            id: this.books.length ? this.books[this.books.length - 1].id + 1 : 1,
+                            name: this.name,
+                            date: +new Date(),
+                        })
+
+                    } else {
+                        console.log(this.id);
+                        this.books.some((item) => {
+                            if (item.id == this.id) {
+                                item.name = this.name;
+                                return true;
+                            }
+                        });
+                        this.flag = false;
+
+                    }
+                    this.id = '';
+                    this.name = '';
+                },
+                //删除数据
+                del(id) {
+                    //获取当前项所在的id
+                    console.log(id);
+                    //获取当前项的索引 
+                    var index = this.books.findIndex((item) => {
+                        return item.id == id;
+                    });
+                    console.log(index);
+                    //splice方法删除books数组index起的一项
+                    this.books.splice(index, 1);
+                },
+                edit(id) {
+                    this.flag = true;
+                    console.log(id);
+                    var i = this.books.findIndex((item) => {
+                        return item.id == id;
+                    });
+                    this.id = this.books[i].id;
+                    this.name = this.books[i].name;
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

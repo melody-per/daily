@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style type="text/css">
+        .grid {
+            margin: auto;
+            width: 530px;
+            text-align: center;
+        }
+        
+        .grid table {
+            border-top: 1px solid #C2D89A;
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .grid th,
+        td {
+            padding: 10;
+            border: 1px dashed #F3DCAB;
+            height: 35px;
+            line-height: 35px;
+        }
+        
+        .grid th {
+            background-color: #F3DCAB;
+        }
+        
+        .grid .book {
+            padding-bottom: 10px;
+            padding-top: 5px;
+            background-color: #F3DCAB;
+        }
+        
+        .grid .total {
+            height: 30px;
+            line-height: 30px;
+            background-color: #F3DCAB;
+            border-top: 1px solid #C2D89A;
+        }
+        
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <div class="grid">
+            <div>
+                <h1>图书管理</h1>
+                <div class="book">
+                    <div>
+                        <label for="id"> 编号： </label> <input type="text" id="id" v-model='id' />
+                        <label for="name"> 名称： </label>
+                        <input type="text" id="name" v-model='name' v-focus/> <button @click='handler' :disabled='issubmit'>提交</button>
+                    </div>
+                </div>
+            </div>
+            <div class="total"><span>图书总数：</span> <span>{{books.length}}</span>计算属性：{{count}}</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>名称</th>
+                        <th>时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for='item in books' :key='item.id'>
+                        <td>{{item.id}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.date | format('yyyy-MM-dd hh:mm:ss')}}</td>
+                        <td><a href="#" @click.prevent="toEdit(item.id)">修改</a> <span>|</span> <a href="#" @click.prevent='delbook(item.id)'>删除</a></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <script>
+        Vue.directive('focus', {
+            inserted(el) {
+                el.focus()
+            }
+        });
+        Vue.filter('format', function(value, arg) {
+            function dateFormat(date, format) {
+                if (typeof date === "string") {
+                    var mts = date.match(/(\/Date\((\d+)\)\/)/);
+                    if (mts && mts.length >= 3) {
+                        date = parseInt(mts[2]);
+                    }
+                }
+                date = new Date(date);
+                if (!date || date.toUTCString() == "Invalid Date") {
+                    return "";
+                }
+                var map = {
+                    "M": date.getMonth() + 1, //月份 
+                    "d": date.getDate(), //日 
+                    "h": date.getHours(), //小时 
+                    "m": date.getMinutes(), //分 
+                    "s": date.getSeconds(), //秒 
+                    "q": Math.floor((date.getMonth() + 3) / 3), //季度 
+                    "S": date.getMilliseconds() //毫秒 
+                };
+
+                format = format.replace(/([yMdhmsqS])+/g, function(all, t) {
+                    var v = map[t];
+                    if (v !== undefined) {
+                        if (all.length > 1) {
+                            v = '0' + v;
+                            v = v.substr(v.length - 2);
+                        }
+                        return v;
+                    } else if (t === 'y') {
+                        return (date.getFullYear() + '').substr(4 - all.length);
+                    }
+                    return all;
+                });
+                return format;
+            }
+            return dateFormat(value, arg);
+        })
+
+        new Vue({
+            el: "#app",
+            data: {
+                id: '',
+                name: '',
+                issubmit: false,
+                flag: false,
+                books: '',
+            },
+            computed: {
+                count() {
+                    return this.books.length
+                }
+            },
+
+            watch: {
+                name(val) {
+                    this.issubmit = this.books.some(item => item.name == val)
+                }
+            },
+
+            created() {
+                const data = [{
+                    id: 1,
+                    name: '三国演义',
+                    date: new Date()
+                }, {
+                    id: 2,
+                    name: '水浒传',
+                    date: new Date()
+                }, {
+                    id: 3,
+                    name: '西游记',
+                    date: new Date()
+                }, {
+                    id: 4,
+                    name: '红楼梦',
+                    date: new Date()
+                }];
+                this.books = data;
+            },
+
+            methods: {
+                handler() {
+                    if (!this.name) return;
+                    if (this.flag == false) {
+                        this.books.push({
+                            id: this.books.length + 1,
+                            name: this.name,
+                            date: +new Date(),
+                        });
+                    } else {
+                        console.log(this.id);
+                        console.log(this.name);
+                        this.books.some((item) => {
+                            if (item.id == this.id) {
+                                item.name = this.name;
+                                return true;
+                            }
+                        });
+                        this.flag = false;
+                    }
+
+                    this.id = this.name = ' ';
+
+                },
+                delbook(id) {
+                    console.log(id);
+                    //方法1
+                    // var index = this.books.findIndex((item) => {
+                    //     return item.id == id;
+                    // });
+                    // console.log(index);
+
+                    // this.books.splice(index, 1);
+                    //方法2
+                    this.books = this.books.filter((item) => {
+                        return item.id != id
+                    })
+                },
+                toEdit(id) {
+                    this.flag = true;
+                    //方法1
+                    // var i = this.books.findIndex((item) => {
+                    //     return item.id == id;
+                    // });
+                    // this.id = this.books[i].id;
+                    // this.name = this.books[i].name;
+                    //方法2
+                    const res = this.books.filter((item) => {
+                        return item.id == id;
+                    });
+                    // console.log(res);
+                    this.id = res[0].id;
+                    this.name = res[0].name;
+
+                }
+            },
+        });
+    </script>
+</body>
+
+</html>

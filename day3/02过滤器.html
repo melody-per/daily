@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+
+        日期是：{{time | formdata}}
+
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        Vue.filter('formdata', function(val) {
+            const data = new Date(val);
+            const y = data.getFullYear();
+            const m = data.getMonth();
+            const d = data.getDate();
+            return `${y}-${m}-${d}`;
+        });
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                time: 1599273235038,
+            },
+            methods: {},
+        })
+    </script>
+</body>
+
+</html>
