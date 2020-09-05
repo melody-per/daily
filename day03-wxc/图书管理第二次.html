@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+    <style type="text/css">
+        .grid {
+            margin: auto;
+            width: 530px;
+            text-align: center;
+        }
+
+        .grid table {
+            border-top: 1px solid #c2d89a;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .grid th,
+        td {
+            padding: 10;
+            border: 1px dashed #f3dcab;
+            height: 35px;
+            line-height: 35px;
+        }
+
+        .grid th {
+            background-color: #f3dcab;
+        }
+
+        .grid .book {
+            padding-bottom: 10px;
+            padding-top: 5px;
+            background-color: #f3dcab;
+        }
+
+        .grid .total {
+            height: 30px;
+            line-height: 30px;
+            background-color: #f3dcab;
+            border-top: 1px solid #c2d89a;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="grid">
+            <div>
+                <h1>图书管理</h1>
+                <div class="book">
+                    <div>
+                        <label for="id">编号：</label>
+                        <input type="text" id="id" disabled v-model="id">
+                        <label for="name">名称：</label>
+                        <input type="text" id="name" v-model="name" v-focus>
+                        <button @click="addBook" :disabled="isOn">提交</button>
+                    </div>
+                </div>
+            </div>
+            <div class="total">
+                <span>图书总数：{{books.length}} </span><span></span>计算属性:{{num}}
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>名称</th>
+                        <th>时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr :key="item.id" v-for="(item,index) in books">
+                        <td>{{item.id}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.date | time}}</td>
+                        <td>
+                            <a href="#" @click="upBook(item.id)">编辑</a> |
+                            <a href="#" @click="delBook(item.id)">删除</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src='../../vue.js'></script>
+    <script>
+        // 自定义属性,获取焦点
+        Vue.directive("focus", {
+            inserted(el) {
+                el.focus()
+            }
+        })
+        //时间过滤器
+        Vue.filter('time', function (val, parma) {
+            const date = new Date(val);
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+            const h = date.getHours();
+            const m = date.getMinutes();
+            const s = date.getSeconds();
+            if (parma == 'yyyy') {
+                return `${year}`
+            } else if (parma == 'yyyy-mm-dd') {
+                return `${year}-${month}-${day}`
+            } else {
+                return `${year}-${month}-${day} ${h}:${m}:${s}`
+            }
+        })
+        new Vue({
+            el: '#app',
+            data: {
+                id: '',
+                name: '',
+                // 控制提交按钮修改的开关
+                flag: true,
+                //提交按钮禁用
+                isOn: false,
+                books: []
+            },
+            // 钩子函数,赋值
+            created() {
+                const data = [{
+                    id: 1,
+                    name: '三国演义',
+                    date: +new Date()
+                }, {
+                    id: 2,
+                    name: '水浒传',
+                    date: +new Date()
+                }, {
+                    id: 3,
+                    name: '红楼梦',
+                    date: +new Date()
+                }, {
+                    id: 4,
+                    name: '西游记',
+                    date: +new Date()
+                }]
+                this.books = data
+            },
+            //计算属性
+            computed: {
+                num() {
+                    return this.books.length
+                }
+            },
+            //监视器,当名字改变时,检测是否重复,控制按钮禁用
+            watch: {
+                name(val) {
+                    var res = this.books.some(item => item.name == val)
+                    this.isOn = res
+                }
+            },
+            methods: {
+                //提交按钮
+                addBook() {
+                    //检测非空
+                    if (!this.name.trim()) return
+                    //添加功能
+                    if (this.flag) {
+                        this.books.push({
+                            id: this.books.length ? this.books[this.books.length - 1].id + 1 : 1,
+                            name: this.name,
+                            date: +new Date()
+                        })
+                        //修改功能提交
+                    } else {
+                        // this.books[this.id - 1].name = this.name
+                        this.books.some(item => {
+                            if (item.id == this.id) {
+                                item.name = this.name
+                                return true
+                            }
+                        })
+                    }
+                    //修改后修改开关
+                    this.flag = true
+                    //清空表单值
+                    this.id = this.name = ''
+                },
+                //删除功能
+                delBook(id) {
+                    console.log(id);
+                    // 方法一找下标
+                    // const index = this.books.findIndex(item => item.id == id)
+                    // this.books.splice(index, 1)
+                    // 方法二过滤
+                    this.books = this.books.filter(item => item.id != id)
+                },
+                //更新功能
+                upBook(id) {
+                    // this.id = id;
+                    // this.name = this.books[id - 1].name最后一项不行
+                    this.flag = false
+                    const res = this.books.filter(item => item.id == id)
+                    this.id = res[0].id
+                    this.name = res[0].name
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        日期是:{{time | data('yyyy')}}
+        日期是:{{time | data('yyyy-ss')}}
+        日期是:{{time | data('yyyy-qq-ff')}}
+    </div>
+    <script src='../../vue.js'></script>
+    <script>
+        Vue.filter('data', function (val, param) {
+            const date = new Date(val);
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+            const h = date.getHours();
+            const m = date.getMinutes();
+            const s = date.getSeconds();
+            // return `${year}-${month}-${day}`
+            if (param == 'yyyy') {
+                return `${year}`
+            } else if (param == 'yyyy-ss') {
+                return `${year}-${month}`
+            } else {
+                return `${year}-${month}-${day} ${h}:${m}:${s}`
+            }
+        })
+        new Vue({
+            el: '#app',
+            data: {
+                time: 13423552353,
+            },
+            methods: {},
+        })
+    </script>
+</body>
+
+</html>

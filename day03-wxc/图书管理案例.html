@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style type="text/css">
+    .grid {
+      margin: auto;
+      width: 530px;
+      text-align: center;
+    }
+
+    .grid table {
+      border-top: 1px solid #c2d89a;
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .grid th,
+    td {
+      padding: 10;
+      border: 1px dashed #f3dcab;
+      height: 35px;
+      line-height: 35px;
+    }
+
+    .grid th {
+      background-color: #f3dcab;
+    }
+
+    .grid .book {
+      padding-bottom: 10px;
+      padding-top: 5px;
+      background-color: #f3dcab;
+    }
+
+    .grid .total {
+      height: 30px;
+      line-height: 30px;
+      background-color: #f3dcab;
+      border-top: 1px solid #c2d89a;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div class="grid">
+      <div>
+        <h1>图书管理</h1>
+        <div class="book">
+          <div>
+            <label for="id">编号：</label>
+            <input type="text" id="id" v-model="id">
+            <label for="name">名称：</label>
+            <input type="text" id="name" v-model="name">
+            <button @click="handler" :disabled="isOn">提交</button>
+          </div>
+        </div>
+      </div>
+      <div class="total">
+        <span>图书总数：</span><span>{{books.length}}</span>计算属性:
+        {{count}}
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>编号</th>
+            <th>名称</th>
+            <th>时间</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr :key='item.id' v-for='(item,index) in books'>
+            <td>{{item.id}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.date | data}}</td>
+            <td>
+              <a href="#" @click.prevent="toEdit(index)">修改</a>
+              <span>|</span>
+              <a href="#" @click.prevent="delbook(index)">删除</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script type="text/javascript" src="../../vue.js"></script>
+  <script type="text/javascript">
+    Vue.filter('data', function (val, param) {
+      const date = new Date(val);
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+      const h = date.getHours();
+      const m = date.getMinutes();
+      const s = date.getSeconds();
+      // return `${year}-${month}-${day}`
+      if (param == 'yyyy') {
+        return `${year}`
+      } else if (param == 'yyyy-ss') {
+        return `${year}-${month}-${day}`
+      } else {
+        return `${year}-${month}-${day} ${h}:${m}:${s}`
+      }
+    })
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        id: '',
+        name: '',
+        flag: false,
+        isOn: false,
+        books: []
+      },
+      created() {
+        const data = [{
+          id: 1,
+          name: '三国演义',
+          date: +new Date()
+        }, {
+          id: 2,
+          name: '水浒传',
+          date: +new Date()
+        }, {
+          id: 3,
+          name: '红楼梦',
+          date: +new Date()
+        }, {
+          id: 4,
+          name: '西游记',
+          date: +new Date()
+        }]
+        this.books = data
+      },
+      computed: {
+        count() {
+          return this.books.length
+        }
+      },
+      watch: {
+        name(val) {
+          const res = this.books.some((item) => item.name == val)
+          console.log(res);
+          this.isOn = res
+        }
+      },
+      methods: {
+
+        handler() {
+          if (!this.name) return
+          if (this.flag == false) {
+            this.books.push({
+              id: this.books.length ? this.books[this.books.length - 1].id + 1 : 1,
+              name: this.name,
+              date: +new Date()
+            })
+          } else {
+            this.books[this.id - 1].name = this.name
+          }
+          this.flag = false;
+          this.id = this.name = '';
+        },
+        //传的是index!!,就直接删.传的是id要找id
+        delbook(id) {
+          // console.log(id);
+          // const index = this.books.findIndex(item => item.id == id
+          // )
+          // console.log(index);
+          this.books.splice(id, 1)
+          // 方法二
+          // this.books = this.books.filter(item => item.id != id)
+        },
+        toEdit(id) {
+          // const index = this.books.findIndex(item => item.id == id)
+          // console.log(index);
+          this.id = this.books[id].id
+          this.name = this.books[id].name
+          this.flag = true;
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>

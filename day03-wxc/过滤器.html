@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        日期是:{{time | data | str}}
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        Vue.filter('data', function (val) {
+            const date = new Date(val);
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+            return `${year}-${month}-${day}`
+        })
+        Vue.filter('str', function (val) {
+            return `今天是${val}`
+        })
+        new Vue({
+            el: '#app',
+            data: {
+                time: 13423552353,
+            },
+            methods: {},
+        })
+    </script>
+</body>
+
+</html>

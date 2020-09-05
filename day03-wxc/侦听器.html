@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <input type="text" v-model.lazy="uname">{{tip}}
+    </div>
+    <script src='../../vue.js'></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                uname: '',
+                tip: ''
+            },
+            methods: {
+                change(val) {
+                    setTimeout(() => {
+                        if (val == "wxc") {
+                            this.tip = '用户名已被占用'
+                        } else {
+                            this.tip = '注册成功'
+                        }
+                    }, 2000)
+                }
+            },
+            watch: {
+                uname: function (val) {
+                    this.change(val)
+                    this.tip = '正在验证...'
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

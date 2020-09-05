@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <p>{{msg}}</p>
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                msg: '钩子函数'
+            },
+            methods: {
+                fn() {
+                    console.log('调用了');
+                }
+            },
+            //创建vue实例的时候,有一些生命周期函数(钩子函数)
+            //这是第一个钩子函数,实例创建前,在这个钩子函数中,data中的数据和methods中的方法还未被初始化完毕,不可以访问到data中的数据和methods方法的
+            beforeCreate() {
+                console.log(this.msg);//undefined
+                this.fn()//报错
+            },
+            // 第二个钩子函数,创建后,这个钩子访问的时候,data中的数据和方法,已经被初始化挖鼻,最早访问数据和方法,需要在created这个钩子中访问
+            created() {
+                console.log(this.msg);
+                this.fn()
+            },
+            // 挂载前 主要关注的是dom树,beforemount说明页面中插值表达式的数据还未被真正的替换
+            beforeMount() {
+                console.log(document.querySelector('p'.innerHTML));//{{msg}}
+            },
+            // mounted挂载后,说明data中的数据已经被替换到了页面视图中
+            mounted() {
+                console.log(document.querySelector('p'.innerHTML));//钩子函数
+            },
+            beforeUpdate() {
+                console.log(this.msg);
+            }
+        })
+    </script>
+</body>
+
+</html>

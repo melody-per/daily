@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <input type="text" v-model="xing">姓
+        <input type="text" v-model="ming">名
+        <hr>
+        {{fullname}}
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                xing: '汪',
+                ming: '秀',
+                fullname: '汪秀'
+            },
+            methods: {},
+            watch: {
+                xing: function (val) {
+                    this.fullname = this.xing + this.ming + val
+                },
+                ming: function (val) {
+                    this.fullname = this.xing + this.ming + val
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
