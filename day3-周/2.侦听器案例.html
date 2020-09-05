@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model.lazy="msg1">{{msg2}}
+    </div>
+    <script src='vue.js'></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                msg1: '111',
+                msg2: '',
+            },
+            methods: {
+                checkName: function (mag1) {
+                    // 调用接口，但是可以使用定时任务的方式模拟接口调用
+                    var that = this;
+                    setTimeout(function () {
+                        // 模拟接口调用
+                        if (mag1 == 'admin') {
+                            that.msg2 = '用户名已经存在，请更换一个';
+                        } else {
+                            that.msg2 = '用户名可以使用';
+                        }
+                    }, 2000);
+                }
+            },
+            computed: {},
+            watch: {
+                msg1(msg1) {
+                    this.checkName(msg1)
+                    this.msg2 = "正在验证..."
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

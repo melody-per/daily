@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+         <style type="text/css">
+    .grid {
+      margin: auto;
+      width: 530px;
+      text-align: center;
+    }
+    .grid table {
+      border-top: 1px solid #C2D89A;
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .grid th,td {
+      padding: 10;
+      border: 1px dashed #F3DCAB;
+      height: 35px;
+      line-height: 35px;
+    }
+    .grid th {
+      background-color: #F3DCAB;
+    }
+    .grid .book {
+      padding-bottom: 10px;
+      padding-top: 5px;
+      background-color: #F3DCAB;
+    }
+    .grid .total {
+      height: 30px;
+      line-height: 30px;
+      background-color: #F3DCAB;
+      border-top: 1px solid #C2D89A;
+    }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="grid">
+        <div>
+          <h1>图书管理</h1>
+          <div class="book">
+            <div>
+              <label for="id"> 编号： </label> <input type="text" id="id" v-model="id" />
+              <label for="name"> 名称： </label>
+              <input type="text" id="name"  v-model="name"/> <button @click="add">提交</button>
+            </div>
+          </div>
+        </div>
+        <div class="total"><span>图书总数：</span> <span>{{length}} </span></div>
+        <table>
+          <thead>
+            <tr>
+              <th>编号</th>
+              <th>名称</th>
+              <th>时间</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in arr" :key="item.id">
+              <td>{{item.id}}</td>
+              <td>{{item.name}} </td>
+              <td>{{item.time}} </td>
+              <td><a href="javascript:;" @click="rec(item.id)">修改</a> <span>|</span> <a href="javascript:;" @click="del(item.id)" >删除</a></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          a:false,
+          arr:'',
+          id:"",
+          name:"",
+        },
+        created(){
+          const data=[
+          {id:1,name:'三国演义',time:this.getTimer(1599288976986)},
+            {id:2,name:'封神榜',time:this.getTimer(1599288976986)},
+            {id:3,name:'水浒传',time:this.getTimer(1599288976986)},
+            {id:4,name:'西游记',time:this.getTimer(1599288976986)},
+          ];
+
+          this.arr=data;
+        },
+        methods: {
+          add(){
+            //判断输入的书名
+            if(!this.name) return;
+            //判断是新增还是修改
+            if (!this.a) {
+              //新增书
+              this.arr.push({
+              id:this.arr.length?this.arr[this.arr.length-1].id+1:1,
+              name:this.name, 
+              time:this.getTimer(+new Date())
+            })
+              this.a=false
+            } else {
+              //修改书
+               this.arr.some(item=>{
+                if(item.id==this.id)
+                item.name=this.name
+                return true
+              })
+              this.a=true
+              this.id='',
+              this.name=''
+            }
+            this.id='',
+            this.name=''
+          
+          },
+          del(id){
+            //使用数组下标来删除
+            var index=this.arr.findIndex(item=> {return item.id==id})
+            this.arr.splice(index,1)
+            //方法二:fliter替换原数组
+            // this.arr=this.arr.filter(function(item){
+            //   return item.id !=id
+            // })
+          },
+          rec(id){
+            var res=this.arr.filter(item=>{return item.id==id})
+            console.log(res);
+            this.id=res[0].id
+            this.name=res[0].name
+            this.a=true;
+          },
+          getTimer(newtime) {
+                var date = new Date(newtime)
+                var week = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
+                var year = date.getFullYear()
+                var month = date.getMonth() + 1
+                var datee = date.getDate()
+                var day = date.getDay()
+                var time = year + '年' + month + '月' + datee + '日 	' + week[day]
+                function getTimerr() {
+                    var time = new Date()
+                    var hour = time.getHours()
+                    hour = hour < 10 ? '0' + hour : hour
+                    var minute = time.getMinutes()
+                    minute = minute < 10 ? '0' + minute : minute
+                    var second = time.getSeconds()
+                    second = second < 10 ? '0' + second : second
+                    return hour + ':' + minute + ':' + second
+                }
+                return time + ' ' + getTimerr()
+            },
+        },
+        computed:{
+          length(){
+            return this.arr.length
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
