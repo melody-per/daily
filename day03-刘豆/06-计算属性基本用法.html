@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <div>{{msg}}</div>
+        <div>{{reverseString}}</div>
+        <div>{{str}}</div>
+        <div>{{String}}</div>
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        // 计算属性
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                msg: 'nihao2',
+                str: 'English'
+            },
+            methods: {},
+            computed: {
+
+                // 形式上是一个函数，但是使用的时候是把它当做属性来使用
+                // 计算属性基于data中的数据进行运行的，只要数据发生变化更改，计算属性会重新执行
+                reverseString: function() {
+                    return this.msg.split('').reverse().join('');
+                },
+                String: function() {
+                    return this.str.toUpperCase()
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

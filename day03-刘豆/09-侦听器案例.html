@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <span>用户名：</span>
+        <span>
+            <input type="text" v-model.lazy = 'uname'>
+        </span>
+        <span>{{tip}}</span>
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        /* 侦听器
+                1.采用侦听器监听用户名的变化
+                2.调用和后台接口进行验证
+                3.根据验证的结果调整提示信息*/
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                uname: '',
+                tip: ''
+            },
+            methods: {
+                checkName: function(uname) {
+                    //调用接口，但是可以使用定时任务的方式模拟接口调用
+                    // var that = this
+                    setTimeout(() => {
+                        //模拟接口调用
+                        if (uname == 'admin') {
+                            this.tip = '用户名已经存在，请更换一个'
+                        } else {
+                            this.tip = '用户名可以使用'
+                        }
+                    }, 2000);
+                }
+            },
+            watch: {
+                //侦听器处理异步业务
+                uname(val) {
+                    //调用后台接口验证用户名的合法性
+                    this.checkName(val)
+                    this.tip = '正在验证......'
+                }
+            }
+
+            /*方法，计算属性，侦听器的区别
+            1.方法一般配合着事件来触发，不会进行结果的缓存
+            2.计算舒心，可以将计算结果进行缓存，只要数据不发生变化，不会重新执行
+            3.侦听器： 侦听器可以做异步，路由地址的监听*/
+        })
+    </script>
+</body>
+
+</html>

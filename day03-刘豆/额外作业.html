@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 定义一个自定义指令, v-gettime, 使用当前指令的标签渲染出 多久之前  如果当前的时间戳减去之前的时间戳 < 10000, 返回'刚刚'  > 10000 '1小时' -->
+
+    <div id='app'>
+
+        <div v-if='obj.times<10000' v-gettime="obj">刚刚</div>
+        <div v-if='obj.times>10000' v-gettime="obj">一小时之前</div>
+
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        // Vue.directive('gettime', {
+        //     bind(el, binding) {
+        //         console.log(binding.value.new - binding.value.time);
+        //         TimeNew = binding.value.new - binding.value.time
+        //         console.log(el.innerHTML)
+        //         if (TimeNew > 10000) {
+        //             el.innerHTML = '1'
+        //         } else if (TimeNew < 10000) {
+        //             el.innerHTML = '2'
+        //         }
+        //     }
+        // })
+
+        Vue.directive('gettime', {
+            bind(el, binding) {
+                binding.value.times = binding.value.new - binding.value.time
+            }
+        })
+
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                obj: {
+                    time: 1599130665722,
+                    new: +new Date(),
+                    times: '0'
+                }
+
+
+            },
+            methods: {},
+        })
+    </script>
+</body>
+
+</html>

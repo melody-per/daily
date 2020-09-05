@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <!-- 因为输入框的value值默认是string类型，需要做相加运算处理，需要进行数据类型的转换，.number修饰符可将输入框的数字字符串转为数字类型 -->
+        number<input type="text" v-model.number='number1'>{{number1+100}}
+        <hr>
+
+        <!-- 去除两端空格，.trim去除两端空格 -->
+        <!-- trim<input type="text" v-model.trim='trim'>{{trim.length}} -->
+        trim <input type="text" v-model.trim='trim'>{{trim.length}}
+        <hr>
+
+        <!-- v-model指令是内部配合着input事件来操作的  .lazy修饰符，可以将input修改成change事件，失去焦点的时候更新数据 -->
+        <!-- lazy<input type="text" v-model.lazy='lazy'>{{lazy}} -->
+        lazy <input type="text" v-model.lazy='lazy'>{{lazy}}
+
+        <button v-on:click='handel'>点击</button>
+    </div>
+    <script src='js/vue.js'></script>
+    <script>
+        // 表单域修饰符
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                number1: 10,
+                trim: '',
+                lazy: ''
+            },
+            methods: {
+                handel: function() {
+                    console.log(this.number1 + 13);
+                    console.log(this.trim.length);
+
+                }
+
+            },
+        })
+    </script>
+</body>
+
+</html>

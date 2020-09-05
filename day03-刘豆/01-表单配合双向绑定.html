@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id='app'>
+
+        <!-- v-model 双向绑定 - 用户需要填写 点击 选择 这些操作使用双向绑定 在表单元素中一般使用的双向绑定较多 -->
+        <!-- v-bind  属性绑定（单向绑定）类名 索引 自定义属性 -->
+
+
+        <input type="text" v-model='iptmsg'>{{iptmsg}}
+        <hr>
+        <textarea v-model='msg'></textarea>{{msg}}
+        <!--文本域和输入框极为类似 -->
+        <hr>
+
+
+        <input type="radio" v-model='sex' value='0'>男
+        <input type="radio" v-model='sex' value="1"> 女{{sex}}
+        <hr>
+
+        <!-- 复选框  单个情况 单个复选框  绑定到布尔值 -->
+        <input type="checkbox" v-model='check1'>{{check1}}
+        <hr>
+
+        <!-- 复选框 多个复选框，绑定到数组 -->
+        <input type="checkbox" v-model='hobby' value='one'>性感的
+        <input type="checkbox" v-model='hobby' value='two'>可爱的
+        <input type="checkbox" v-model='hobby' value='three'>冷库的{{hobby}}
+        <hr>
+
+        <!-- 下拉表单  选中单个绑定到option项具体的value值 -->
+        <select v-model='language'>
+            <option value="1">泰语</option>
+            <option value="2">英语</option>
+            <option value="3">屌哥语</option>
+            <option value="4">汉语</option>
+        </select>{{language}}
+        <hr>
+
+
+        <!-- multiple 下拉表单多选 -->
+        <!-- 下拉表单  选中多个绑定数组，option项具体的value值会存到数组中 -->
+        <select v-model='language2' multiple>
+                <option value="1">泰语</option>
+                <option value="2">英语</option>
+                <option value="3">屌哥语</option>
+                <option value="4">汉语</option>
+            </select>{{language2}}
+
+    </div>
+    <script src='js/vue.js'></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                iptmsg: '吴彦祖真帅',
+                sex: '',
+                check1: true,
+                hobby: [],
+                msg: '',
+                language: '1',
+                language2: '1'
+
+            },
+            methods: {},
+        })
+    </script>
+</body>
+
+</html>

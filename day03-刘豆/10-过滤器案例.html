@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <!-- 过滤器(管道函数)一般可被用于一些常见的文本格式化 -->
+        日期是：{{timer | dataformat}}
+        <hr> 日期是：{{timer | dataformat|str}}
+        <!-- 极限连接 -->
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        // 将时间戳转换为年月日
+        Vue.filter("dataformat", function(timer) { //timer 这个参数表示要处理的数据
+            console.log(timer);
+            const data = new Date(timer)
+            const year = data.getFullYear();
+            const month = data.getMonth() + 1;
+            const day = data.getDate()
+            return `${year}-${month}-${day}`
+        })
+        Vue.filter('str', function(timer) {
+            console.log(timer); //2020-9-5
+            return '今天是' + timer
+        })
+        new Vue({
+            el: '#app',
+            data: {
+                timer: 1599268097326,
+            },
+            methods: {},
+            // 局部过滤器
+            filter: {
+                dataformat: function(timer) {
+                    console.log(timer);
+                    const data = new Date(timer)
+                    const year = data.getFullYear();
+                    const month = data.getMonth() + 1;
+                    const day = data.getDate()
+                    return `${year}-${month}-${day}`
+                }
+            }
+
+        })
+    </script>
+</body>
+
+</html>

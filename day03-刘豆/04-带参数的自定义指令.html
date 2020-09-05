@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <input type="text" value='123' v-color='obj'>
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        // 全局指令定义 一定要定义在创建实例之前 Vue.directive('指令名',{配置对象})
+
+        // 自定义指令--带参数
+
+
+        Vue.directive('color', {
+            bind(el, binding) {
+                console.log(binding.value.color);
+                console.log(binding.value.bgColor);
+
+                // 根据指令的参数设置背景颜色和文字颜色
+                el.style.color = binding.value.color
+                el.style.background = binding.value.bgColor
+                    // el.color()
+            }
+
+        })
+        new Vue({
+            el: '#app',
+            data: {
+                obj: {
+                    color: 'red',
+                    bgColor: 'green'
+                }
+            },
+            methods: {},
+        })
+    </script>
+</body>
+
+</html>

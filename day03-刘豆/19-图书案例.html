@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style type="text/css">
+        .grid {
+            margin: auto;
+            width: 530px;
+            text-align: center;
+        }
+        
+        .grid table {
+            border-top: 1px solid #C2D89A;
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .grid th,
+        td {
+            padding: 10;
+            border: 1px dashed #F3DCAB;
+            height: 35px;
+            line-height: 35px;
+        }
+        
+        .grid th {
+            background-color: #F3DCAB;
+        }
+        
+        .grid .book {
+            padding-bottom: 10px;
+            padding-top: 5px;
+            background-color: #F3DCAB;
+        }
+        
+        .grid .total {
+            height: 30px;
+            line-height: 30px;
+            background-color: #F3DCAB;
+            border-top: 1px solid #C2D89A;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="grid">
+            <div>
+                <h1>图书管理</h1>
+                <div class="book">
+                    <div>
+                        <label for="id"> 编号： </label> <input type="text" id="id" v-model='id' disabled/>
+                        <label for="name"> 名称： </label>
+                        <input type="text" id="name" v-model='name' v-focus /> <button v-on:click='handel' v-bind:disabled="isSubmit">提交</button>
+                    </div>
+                </div>
+            </div>
+            <div class="total"><span>图书总数：</span> <span>{{books.length}}</span> <span>计算属性:{{sum}}</span></div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>名称</th>
+                        <th>时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for='item in books' v-bind:key='item.id' v-cloak>
+                        <td>{{item.id}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.date|dateFmater('yyyy-MM-DD hh:mm:ss')}}</td>
+                        <td>
+                            <a href="" v-on:click.prevent='toEdit(item.id)'>修改</a>
+                            <span>|</span>
+                            <a href="" v-on:click.prevent='delbook(item.id)'>删除</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <script>
+        Vue.directive('focus', {
+            inserted: function(el) {
+                el.focus()
+            }
+        })
+        Vue.filter('dateFmater', function(val, param) {
+            // console.log(val); val参数1是要过滤的数据  参数2param是用户传递的参数
+            const date = new Date(val);
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+            const h = date.getHours();
+            const m = date.getMinutes();
+            const s = date.getSeconds();
+            // console.log(day);
+            if (param == "yyyy") {
+                return `${year}`;
+            } else if (param == "yyyy-MM-DD") {
+                return `${year}-${month}-${day}`;
+            } else if (param == "yyyy-MM-DD hh:mm:ss") {
+                return `${year}-${month}-${day} ${h}:${m}:${s}`;
+            }
+        })
+        new Vue({
+            el: "#app",
+            data: {
+                flag: false,
+                isSubmit: false,
+                id: '',
+                name: '',
+                books: []
+            },
+
+            // 钩子函数
+            created() {
+                // 发送请求  获取到数组数据
+                const data = [{
+                    id: 1,
+                    name: '三国演义',
+                    date: +new Date()
+                }, {
+                    id: 2,
+                    name: '水浒传',
+                    date: +new Date()
+                }, {
+                    id: 3,
+                    name: '红楼梦',
+                    date: +new Date()
+                }, {
+                    id: 4,
+                    name: '西游记',
+                    date: +new Date()
+                }]
+                this.books = data
+            },
+            //计算属性
+            computed: {
+                sum: function() {
+                    return this.books.length
+                }
+            },
+            //侦听事件
+            watch: {
+                name: function(val) {
+                    // 如果用户名输入的name值和原先的name字段一样 就 禁用  反之就开启
+                    // some方法返回的是一个布尔值，不可以在循环里面进行赋值操作
+                    this.isSubmit = this.books.some(item => item.name == val)
+                    console.log(this.isSubmit);
+
+                }
+            },
+            methods: {
+                handel: function() {
+
+                    if (this.flag == false) {
+                        // if (this.books.some(item => item.name == this.name)) return
+                        if (!this.name) return // 表单不能为空，为空就是false，然后取反
+                            // 添加图书
+                        var book = {}
+                        book.id = this.books.length ? this.books[this.books.length - 1].id + 1 : 1
+                        book.name = this.name
+                        book.date = +new Date()
+                        this.books.push(book)
+
+                    } else {
+                        //编辑图书
+                        //就是根据当前的ID去更新数组中对应的数据
+                        // 当我们点击修改按钮之后，data中id和name已经赋值
+                        this.books.some(item => {
+                            if (item.id == this.id) {
+                                item.name = this.name
+                                    // 节省循环次数  some方法  遇到true后会终止循环
+                                return true
+                            }
+                        });
+                        this.flag = false
+                    };
+                    //提交完毕将表单清空
+                    this.id = this.name = ''
+                },
+                delbook: function(id) {
+                    // 方式一： 找到索引截取数组元素
+                    // 拿着id找到对应删除元素的索引，findIndex返回要找的数组元素的索引值
+                    const index = this.books.findIndex((item) => {
+                        console.log(item.id);
+                        return item.id == id
+                    });
+                    console.log(index);
+                    // 调用截取数组的方法
+                    // this.books.splice(index, 2)
+                    this.books.splice(index, 1)
+
+                    // 方式二： 数组的过滤 filter 
+                    // this.books = this.books.filter(item => item.id != id)
+                },
+                // 修改图书
+                toEdit(id) {
+                    // console.log(id);
+                    // 接受到用户传递的id，数组中找到id一样的元素，将id值和name值渲染在页面上
+                    const i = this.books.findIndex(item => item.id == id)
+                    this.id = this.books[i].id
+                    this.name = this.books[i].name
+
+                    // 过滤器方法
+                    // const res = this.books.filter(item => {
+                    //     console.log(item.id);
+                    //     return item.id == id
+                    // })
+                    // this.id = res[0].id
+                    // this.name = res[0].name
+                    this.flag = true
+                }
+
+
+            },
+        });
+    </script>
+</body>
+
+</html>，
