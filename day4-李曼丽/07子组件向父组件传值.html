@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <p>文字</p>
+        <com-a @handel='phandel($event)'></com-a>
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        //1.在子组件中定义  点击  事件 ，在事件中通过$event('自定义事件名')
+        //2.在父组件中  定义自定义事件名
+        //3.在父组件中定义方法
+        Vue.component('com-a', {
+            //$emit()里面传参是   如果是多个  可以采取数组或者对象的方式  emit是用来触发的
+            template: `<div>子组件coma <button @click='$emit("handel", {c1:smag,c2:bgc})'>按钮</button></div>`,
+            data() {
+                return {
+                    smag: 'green',
+                    bgc: 'red',
+                };
+            },
+        });
+        new Vue({
+            el: '#app',
+            data: {},
+            methods: {
+                phandel(param) {
+                    console.log(param);
+                    document.querySelector('p').style.color = param.c1;
+                    document.querySelector('p').style.backgroundColor = param.c2
+
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

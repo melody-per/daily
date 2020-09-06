@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <com :boo-item='boo'>
+            <!-- 作用域插槽  通过父组件来操作子组件的显示方式 -->
+            <template v-slot='scoped'>
+                <!-- {{scoped}}是一个对象  接收过来插槽传递的数据，做了一层对象的包裹 -->
+            {{typeof scoped.row}}
+            <!-- <img v-if='scoped.row=="true"' src="vip.jfif" alt=""> -->
+            <img v-if='scoped.row==true' src="vip.jfif" alt="">
+            <img v-else src="fvip.jfif" alt="" >
+            </template>
+        </com>
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        Vue.component('com', {
+            props: ['booItem'],
+            //不想在组件中去操作数据
+            template: `<div>欢迎你：<slot :row='booItem'></slot></div>`,
+        })
+        new Vue({
+            el: '#app',
+            data: {
+                // boo: 'true'
+                boo: true
+            },
+            methods: {},
+        })
+    </script>
+</body>
+
+</html>

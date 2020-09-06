@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <p>melody</p>
+        <zl @handle='peng($event)'></zl>
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        Vue.component('zl', {
+            template: `<div>我是子组件的本来内容<button @click="$emit('handle',msg)">点击</button></div>`,
+            data() {
+                return {
+                    msg: 'pink'
+                }
+            }
+        })
+        new Vue({
+            el: '#app',
+            data: {},
+            methods: {
+                peng(val) {
+                    console.log(val);
+                    document.querySelector('p').style.color = val;
+
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <com>
+            <header slot='header'>i am header</header>
+            <footer slot='footer'>底部</footer>
+        </com>
+        <hr>
+        <com>
+            <template v-slot:header><div>toubu</div></template>
+            <template v-slot:footer><footer>头部</footer></template>
+        </com>
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        Vue.component('com', {
+            template: `<div><slot name='header'></slot>我是组件com内容<slot name='footer'></slot></div>`,
+
+        })
+        new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+        })
+    </script>
+</body>
+
+</html>

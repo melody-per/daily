@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <p>文字</p>
+        <com-a @handel='phandel'></com-a>
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        Vue.component('com-a', {
+            template: `<div>子组件coma<button @click="$emit('handel')">按钮</button></div>`,
+            data() {
+                return {
+                    smsg: '少壮不努力'
+                }
+            },
+        })
+        new Vue({
+            el: '#app',
+            data: {},
+            methods: {
+                phandel() {
+                    console.log("父组件的方法");
+                    document.querySelector('p').style.color = 'red';
+
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

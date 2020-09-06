@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <aaa></aaa>
+        <bbb></bbb>
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        const coma = {
+            template: `<div>{{msg1}}</div>`,
+            data() {
+                return {
+                    msg1: '我是coma'
+                }
+            }
+        };
+        const comb = {
+            template: `<div><button @click='handel'>{{msg2}}</button></div>`,
+            data() {
+                return {
+                    msg2: '我是coma'
+                }
+            },
+            methods: {
+                handel() {
+                    alert('我是comb')
+                }
+            }
+        };
+        new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            components: {
+                // 组件名：组件值
+                aaa: coma,
+                bbb: comb
+                    //简写
+                    // coma,
+                    // comb,
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <com-array-object></com-array-object>
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        //1.第一种方式
+        const com = {
+            props: ['msg', 'num', 'boo', 'arr', 'obj'],
+            template: `<div>子组件{{msg}} {{typeof num}} {{typeof boo}} {{typeof arr}} {{typeof obj}}</div>`,
+        }
+        Vue.component('ComArrayObject', {
+            template: `<div>子组件2<coma :msg='pmsg' :num='pnum' :boo='pboo' :arr='parr' :obj='pobj'></coma></div>`,
+            data() {
+                return {
+                    pmsg: '生活',
+                    pnum: 18,
+                    pboo: true,
+                    parr: [234, 456, 222],
+                    pobj: {
+                        name: '李白'
+                    },
+                };
+            },
+            //
+            // components: {
+            //     com,
+            // },
+            //第二种方式
+            // components: {
+            //     com: {
+            //         props: ['msg', 'num', 'boo', 'arr', 'obj'],
+            //         template: `<div>子组件{{msg}} {{typeof num}} {{typeof boo}} {{typeof arr}} {{typeof obj}}</div>`,
+            //     }
+            // }
+            //第三种方式
+            components: {
+                coma: com
+            }
+
+        })
+        new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+        })
+    </script>
+</body>
+
+</html>
