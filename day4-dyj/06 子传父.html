@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Honey!❤🎈</title>
+</head>
+<body>
+  <!--? 引入容器 app -->
+    <div id='app'>
+        <p>文字</p>
+        <com-a  @handle="phandler($event)"></com-a>
+</div>
+  <!--? 引入容器 Vue.js -->
+     <script src='./lib/Vue.js'></script> 
+    <script>
+        Vue.component('com-a',{
+
+            template:` <div>  子组件  <button @click="$emit('handle' , {c1: smsg, c2: bgc})">按钮</button></div>`,
+            data(){
+                return{
+                    smsg:'red',
+                    bgc:'pink'
+                };
+            },
+
+        })
+
+  //去除控制台复杂信息
+  Vue.config.productionTip = false;
+ // TODO 引入数据 
+         const vm = new Vue({
+            el: '#app',
+            data:{  
+             
+            },
+            methods:{
+                phandler(param){
+                    console.log('父组件的方法');
+                    console.log(param);
+                    document.querySelector('p').style.color=param.c1;
+                    document.querySelector('p').style.background=param.c2;
+
+                }
+            },
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Honey!❤🎈</title>
+</head>
+<body>
+  <!--? 引入容器 app -->
+    <div id='app'>
+        <!-- 插槽 方法1 -->
+     <com>
+        <header slot='header'>头部</header>
+        <header slot='footer'>底部</header>
+     </com>
+
+     <hr>   
+     
+       <!-- 插槽 方法2 -->
+       <com>
+        <template v-slot:header><header>头部</header></template>
+        <template v-slot:footer><header>底部</header></template>
+     </com>
+
+</div>
+  <!--? 引入容器 Vue.js -->
+     <script src='./lib/Vue.js'></script> 
+    <script>
+
+        Vue.component('com',{
+            //slot 插槽  固定语法  
+            template:'<div><slot name="header"></slot>我是组件com内容区域<slot name="footer"></slot></div>',
+        })
+  //去除控制台复杂信息
+  Vue.config.productionTip = false;
+ // TODO 引入数据 
+         const vm = new Vue({
+            el: '#app',
+            data:{  
+             
+            },
+            methods:{
+             
+            },
+        })
+    </script>
+</body>
+</html>

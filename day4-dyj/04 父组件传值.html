@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Honey!❤🎈</title>
+</head>
+<body>
+  <!--? 引入容器 app -->
+    <div id='app'>
+        {{pmsg}}
+        <menu-item  title="父组件的值"></menu-item>
+</div>
+  <!--? 引入容器 Vue.js -->
+     <script src='./lib/Vue.js'></script> 
+    <script>
+  //去除控制台复杂信息
+  Vue.config.productionTip = false;
+
+            Vue.component('menu-item',{
+                //props:  接收来自父组件的值
+                props:["title"],
+                template:'<div>{{msg + "---" + title}}</div>',
+
+                data(){
+                    return{
+                     msg:'子组件本身的数据'
+                 
+                    }
+                }
+            
+            })
+            
+ // TODO 引入数据 
+         const vm = new Vue({
+            el: '#app',
+            data:{  
+             pmsg:'父组件的内容'
+            },
+            methods:{
+             
+            },
+        })
+    </script>
+</body>
+</html>

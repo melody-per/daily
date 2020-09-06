@@ -1,0 +1,21 @@
+{
+    "launch": {
+
+        "configurations": [],
+        "compounds": []
+    },
+     // .FIXME: 模板字符串自动补全
+  "emmet.triggerExpansionOnTab": true,
+  "emmet.showAbbreviationSuggestions": true,
+  "emmet.showExpandedAbbreviation": "always",
+  "emmet.includeLanguages": {
+    "javascript": "html"
+},
+"[json]": {
+
+    "editor.quickSuggestions": {
+        "strings": true
+    },
+    "editor.suggest.insertMode": "replace"
+}
+}

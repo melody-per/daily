@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Honey!❤🎈</title>
+</head>
+
+<body>
+    <!--? 引入容器 app -->
+    <div id='app'>
+        <my-gu></my-gu>
+   
+        <my-du></my-du>
+    </div>
+    <!--? 引入容器 Vue.js -->
+    <script src='./lib/Vue.js'></script>
+    <script>
+        //创建组件的规范:
+        //Vue.component('组件名',{配置对象})
+        //组件命名的规范:
+        //1- 短横线的命名  eg:my-gu 组件使用时 用 <my-gu></my-gu>
+        //2- 驼峰命名      eg: myDu  组件使用时在结构中必须用短横线的方式 <my-du></my-du>
+        //创建组件
+        Vue.component('my-gu', {
+
+            template: `
+                <div>
+                    子组件1
+                   
+                </div>
+            `
+        });
+
+        Vue.component('myDu', {
+
+            template: `
+            <div>
+                子组件2
+             </div>
+            `
+        });
+
+        //去除控制台复杂信息
+        Vue.config.productionTip = false;
+        // TODO 引入数据 
+        const vm = new Vue({
+            el: '#app',
+            data: {
+
+            },
+            methods: {
+
+            },
+        })
+    </script>
+</body>
+
+</html>

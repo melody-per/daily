@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Honey!❤🎈</title>
+</head>
+<body>
+  <!--? 引入容器 app -->
+    <div id='app'>
+ <dyj></dyj>
+</div>
+
+  <!--? 引入容器 Vue.js -->
+     <script src='./lib/Vue.js'></script> 
+    <script>
+  //去除控制台复杂信息
+  Vue.config.productionTip = false;
+
+
+  Vue.component('dyj',{
+      //template 模板
+      
+    template:`
+        <strong>1236 {{msg}}</strong>
+    `,
+    data(){
+        return{
+            msg:'555'
+        };
+    },
+    method:{
+        handel(){
+            console.log('ddd');
+        }
+    },
+  });
+
+ 
+ // TODO 引入数据 
+         const vm = new Vue({
+            el: '#app',
+            data:{  
+             
+            },
+            methods:{
+             
+            },
+        })
+    </script>
+</body>
+</html>

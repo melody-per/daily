@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Honey!❤🎈</title>
+</head>
+<body>
+  <!--? 引入容器 app -->
+    <div id='app'>
+        <com-a></com-a>
+        <com-b></com-b>
+    
+</div>
+  <!--? 引入容器 Vue.js -->
+     <script src='./lib/Vue.js'></script> 
+    <script>
+  //去除控制台复杂信息
+  Vue.config.productionTip = false;
+
+    // 抽离组件a
+    const coma = {
+        template:'<div>coma子组件</div>'
+    }
+
+    //抽离组件b
+    const comb ={
+        template:'<div>comb子组件</div>'
+    }
+
+ // TODO 引入数据 
+         const vm = new Vue({
+            el: '#app',
+            data:{  
+             
+            },
+            methods:{
+             
+            },
+            // 定义局部组件
+            components:{
+                //引入子组件的方式:
+                //1: 
+                // coma,
+                // comb //组件名和值相同时
+
+                //2-
+                // comA: coma,
+                // comB: comb,
+
+                //3-
+                // "com-A":coma,
+                // "com-B":comb
+               comA: coma,
+               comB: comb
+            }
+        })
+    </script>
+</body>
+</html>

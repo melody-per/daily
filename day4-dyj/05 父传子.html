@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Honey!❤🎈</title>
+</head>
+
+<body>
+    <!--? 引入容器 app -->
+    <div id='app'>
+        <com-array-oject></com-array-oject>
+    </div>
+    <!--? 引入容器 Vue.js -->
+    <script src='./lib/Vue.js'></script>
+    <script>
+        //去除控制台复杂信息
+        Vue.config.productionTip = false;
+
+        //定义子组件
+        const com = {
+            //子组件接收父组件传值
+            props: ['msg' , 'num'],
+            template: `<div>子组件 {{msg}}  {{num}} </div>`
+
+        };
+
+        //定义父组件
+        Vue.component('ComArrayOject', {
+
+            template: `
+        <div>   
+            
+            <com :msg="pmsg"  :num="180"></com>    
+       </div>
+       
+        `,
+        //data 放数据
+            data() {
+                return {
+                    pmsg: 'we',
+                }
+            },
+            //挂载子组件
+            components: {
+                com
+            }
+
+        })
+        // TODO 引入数据 
+        const vm = new Vue({
+            el: '#app',
+            data: {
+
+            },
+            methods: {
+
+            },
+        })
+    </script>
+</body>
+
+</html>
