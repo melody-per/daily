@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+    <style>
+        .current {
+            color: green
+        }
+    </style>
+</head>
+
+<body>
+    <div id='app'>
+        <fruit-list :fruit="list">
+            <!-- sss -->
+            <template v-slot='fruits'>
+                <!-- {{fruits.row.name}} -->
+                <strong v-if="fruits.row.id==2" class="current">{{fruits.row.name}}</strong>
+                <p v-else>{{fruits.row.name}}</p>
+            </template>
+        </fruit-list>
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        //:定义名='item'
+        // v-slot='fruits'
+        // fruits.定义名.name
+        Vue.component('fruit-list', {
+            props: ['fruit'],
+            template: `<div>
+                <ul>
+                <li :key="item.id" v-for="item in fruit"><slot :row="item"></slot></li>
+                </ul>
+            </div>`
+        })
+        new Vue({
+            el: '#app',
+            data: {
+                list: [{
+                    id: 1,
+                    name: 'apple'
+                }, {
+                    id: 2,
+                    name: 'pear'
+                }, {
+                    id: 3,
+                    name: 'watermelon'
+                },]
+            },
+            methods: {},
+        })
+    </script>
+</body>
+
+</html>
