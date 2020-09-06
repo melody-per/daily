@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <com-arr-obj></com-arr-obj>
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        const coma = {
+            props: ['msg', 'num', 'boo', 'arr', 'obj'],
+            template: `<div>子组件(孙子)---{{msg}}----{{num}}---{{boo}}---{{arr[0]}}------{{obj.name}}</div>`
+
+        };
+
+        Vue.component('ComArrObj', {
+            template: `<div>子组件 <coma :msg='pmsg' :num='180' :boo='pboo' :arr='parr' :obj='pobj'></coma></div>`,
+            //加冒号就代表对应的数据类型，不加冒号就是字符串
+            data: function() {
+                return {
+                    pmsg: '生活不止眼前的苟且',
+                    pnum: 18,
+                    pboo: true,
+                    parr: [123, 456, 789],
+                    pobj: {
+                        name: '吴彦祖'
+                    }
+                }
+            },
+            components: {
+                coma
+            }
+        })
+
+        new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+
+        })
+    </script>
+</body>
+
+</html>

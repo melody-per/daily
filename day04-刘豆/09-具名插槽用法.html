@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <comment>
+            <header slot='header'>头部</header>
+            <p>没命名</p>
+            <footer slot='footer'>底部</footer>
+        </comment>
+        <hr>
+
+        <comment>
+            <template v-slot:header>
+                        <header>头部</header>
+                </template>
+            <template v-slot:footer>
+                        <footer >底部</footer>
+                </template>
+
+        </comment>
+
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        Vue.component('comment', {
+            template: `<div>
+            <header>
+                    <slot name='header'></slot>
+            </header>
+            <main>
+                    <slot ></slot>
+            </main>
+            <footer>
+                    <slot name='footer'></slot>
+            </footer>
+            </div>`
+        })
+
+        new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+        })
+    </script>
+</body>
+
+</html>

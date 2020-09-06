@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <my-names></my-names>
+        <hr>
+        <my-name></my-name>
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        // 组件的命名，使用短横线的方式命名组件my-names，在组件使用的时候，<my-names></my-names>
+        Vue.component('my-names', {
+            template: `<div>我是子组件1    <MyName></MyName>
+                <my-name></my-name>
+            </div>`,
+        });
+        // 组件命名使用驼峰式，在纯结构中MyName 在组件使用的时候必须使用短横线的方式连接 my-name ,在模板字符串中使用组件可以使用  驼峰方式，
+        // 也可以使用 短横线的方式
+        Vue.component('MyName', {
+            template: `<div>
+            我是子组件2
+            </div> `,
+        });
+        new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+        })
+    </script>
+</body>
+
+</html>

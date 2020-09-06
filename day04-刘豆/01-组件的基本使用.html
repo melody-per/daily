@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <!-- 组件也是一个Vue实例，Vue实例也是一个组件 -->
+        <abc></abc>
+        <br>
+        <br>
+        <hr>
+        <br>
+        <br>
+        <abc></abc>
+
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        //注册组件
+        // 组件就是封装好的结构样式逻辑代码的一个功能性代，重用，分治
+        // Vue.component('组件名',{配置对象})
+        Vue.component('abc', {
+            template: `<div>
+                    <h2  >停车坐爱枫林晚----</h2><em @click='handel'>{{msg}}</em></div>`,
+            // 1.组件的data一定是一个函数，并且返回一个对象
+            // 2.组件的template必须有且只有一个根节点
+            // 3.template可以使用模板字符串
+            data: function() {
+                return {
+                    msg: '十点半',
+
+                };
+            },
+            methods: {
+                handel: function() {
+                    console.log(this); //this打印出来是个Vue实例
+                    this.msg = '所爱无期'
+                }
+            }
+        })
+        new Vue({
+            el: '#app',
+            data: {
+
+            },
+            methods: {},
+        })
+    </script>
+</body>
+
+</html>

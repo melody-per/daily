@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- 子组件向父组件传值  本质就是父组件 向 子组件传递方法 -->
+    <div id='app'>
+        <p>文字</p>
+        <!-- <com @fangf="handel($event)"></com> -->
+        <com @fangf="handel"></com>
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        // 1.在子组件中定义  点击事件，在事件中通过$emit('自定义事件名fangF')
+        // 2.在父组件中 定义自定义事件名  @fangf="handel"
+        // 3.在父组件中定义方法
+        Vue.component('com', {
+            template: `<div> 我是子组件com   <button @click='$emit("fangf")'>按钮</button> </div>`, //不传参的形式
+            // template: `<div> 我是子组件com   <button @click='$emit("fangf",{c1:smsg,c2:bgc})'>按钮</button> </div>`, 对象形式
+            // template: `<div> 我是子组件com   <button @click='$emit("fangf",[smsg,bgc])'>按钮</button> </div>`, //数组形式
+            data: function() {
+                return {
+                    smsg: 'green',
+                    bgc: 'pink'
+                }
+            }
+        })
+        new Vue({
+            el: '#app',
+            data: {},
+            methods: {
+                handel: function(val) {
+                    // console.log('父组件的方法');
+                    console.log(val);
+                    document.querySelector('p').style.color = 'red' //不传参的形式
+                        // document.querySelector('p').style.color = val.c1   对象形式
+                        // document.querySelector('p').style.background = val.c2
+
+
+                    // document.querySelector('p').style.color = val[0] //数组形式
+                    // document.querySelector('p').style.background = val[1]
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>
