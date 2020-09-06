@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <wxc></wxc>
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        //组件就是封装好的结构样式逻辑代码的一个功能性代码,重用,分治
+        //  Vue.component('组件名',{配置对象})
+        //组件的data一定是一个函数,并且返回一个对象(重用)
+        // 组件的template必须有且只有一个根节点
+        Vue.component('wxc', {
+            data() {
+                return {
+                    msg: "hhehehee"
+                }
+            },
+            template: `<strong @click="ck">组件练习{{msg}}</strong>`,
+            methods: {
+                ck() {
+                    this.msg = "213123123"
+                }
+            }
+        })
+        new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+        })
+    </script>
+</body>
+
+</html>

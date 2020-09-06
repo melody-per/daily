@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <com-a :father="msg"></com-a>
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        // 组件传值加冒号传类型,不加冒号字符串
+        Vue.component("com-a", {
+            props: ['father'],
+            data() {
+                return {
+                    msg: "子组件信息"
+                }
+            },
+            template: `<div>子组件----{{msg}}-----{{father}}
+ 
+            </div>`
+        })
+        new Vue({
+            el: '#app',
+            data: {
+                msg: "父子传值"
+            },
+            methods: {
+            },
+        })
+    </script>
+</body>
+
+</html>

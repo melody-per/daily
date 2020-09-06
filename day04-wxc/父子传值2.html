@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <define></define>
+    </div>
+    <script src='../../vue.js'></script>
+    <script>
+        const obj = {
+            props: ['msg', 'num', 'arr', 'obj1'],
+            template: `<div>{{msg}}{{num}}{{arr}}{{obj1}}一脸懵逼</div>`
+        };
+
+        Vue.component('define', {
+            data() {
+                return {
+                    pmsg: '1父子传值',
+                    pnum: 22,
+                    parr: [1, 2, 3],
+                    pobj1: {
+                        name: 'wxc'
+                    }
+                }
+            },
+            template: `<div>哈哈哈哈
+            <obj :msg="pmsg" :num="pnum" :arr="parr" :obj1="pobj1"></obj>
+            </div>`,
+            components: {
+                obj
+            }
+        })
+        new Vue({
+            el: '#app',
+            data: {
+            },
+            methods: {},
+        })
+    </script>
+</body>
+
+</html>
