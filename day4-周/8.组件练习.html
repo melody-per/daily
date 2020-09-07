@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+
+        <cn>-----我在cn标签中,我把插槽slot默认值覆盖了</cn>
+        <cn>
+            <header slot="header">我是具名插槽1</header>
+        </cn>
+        <!-- <cn>
+            <template v-slot:header>
+                <header>------我是具名插槽2</header>
+            </template>
+        </cn> -->
+        <hr>
+        <com> </com>
+
+    </div>
+    <script src='vue.js'></script>
+    <script>
+        //给全局组件,定义的一个子组件
+        const son = {
+            props: ['msg1'],
+            template: `<p>我是com组件的子组件  ，点击传值给父组件：<br>{{msg1}}<br>
+                <button @click="$emit('sonbtn',sondata)">按钮</button>
+                   </p>`,
+            data() {
+                return {
+                    sondata: '我是子组件son里面的值，我将传值给父组件'
+                }
+            }
+        }
+        //定义一个全局组件
+        Vue.component('com', {
+            template: `
+            <h1>我是一个全局组件 
+                <slot name="wum">{{msg}}</slot>
+                 <comson :msg1='msg2' @sonbtn='ph($event)'></comson>
+                 {{msg3}}
+                 </h1>`,
+            data() {
+                return {
+                    msg: '-------(我是全局组件下的插槽slot,我在data中的值,当做默认值可被覆盖)',
+                    msg2: '我是父组件里面的msg2，传值给了子组件',
+                    msg3: '我是父组件的msg3，点击子组件的按钮后我将和子组件的值结合：++'
+                }
+            },
+            components: {
+                'comson': son
+            },
+            methods: {
+                ph(event) {
+                    this.msg3 = this.msg3 + event
+                }
+            }
+        })
+        new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            //定义一个局部组件
+            components: {
+                'cn': {
+                    template: `<h3>我是一个局部组件<slot>-----我有值,但是被覆盖了-----</slot><slot name="header"></slot> </h3>`
+                },
+                date() {
+                    return {
+                        header: ''
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

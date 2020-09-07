@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <abc-def></abc-def>
+        <zxc-vbn></zxc-vbn>
+        <qwe></qwe>
+    </div>
+    <template id="ppp">
+        <div>
+            <div class="box">
+                <button @click='aaa'>{{bbb}}</button>
+            </div>
+        </div>
+    </template>
+    <script src='vue.js'></script>
+    <script>
+        //template里面的命名可以使用短横线-,可以使用驼峰命名法,但是在页面上只能使用短横线-
+        Vue.component('abcDef', {
+            template: `<h1>{{msg}}</h1>`,
+            data() {
+                return {
+                    msg: 123
+                }
+            }
+        })
+        Vue.component('zxc-vbn', {
+            template: `<h1>{{msg1}}</h1>`,
+            data() {
+                return {
+                    msg1: 456
+                }
+            }
+        })
+        Vue.component('qwe', {
+            template: '#ppp',
+            data() {
+                return {
+                    bbb: 1
+                }
+            },
+            methods: {
+                aaa() {
+                    this.bbb++
+                }
+            }
+        })
+        new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+        })
+    </script>
+</body>
+
+</html>

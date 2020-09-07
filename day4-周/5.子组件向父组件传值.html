@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+    <style>
+        .box {
+            font-size: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="box">666
+
+        </div>
+        <son @anniu='ph($event)'></son>
+    </div>
+    <script src='vue.js'></script>
+    <script>
+        document.querySelector('.box').style.fontSize = 20 + 'px'
+
+        Vue.component('son', {
+            template: `<div>子组件
+                <button @click='$emit("anniu")'>红按钮</button>
+                <button @click='$emit("anniu",{a:blue,b:"",c:""})'>蓝按钮</button>
+                <button @click='$emit("anniu",{a:"",b:addnum,c:""})'>字体加大按钮</button>
+                <button @click='$emit("anniu",{a:"",b:"",c:num})'>字体减小按钮</button>
+                </div>`,
+            data() {
+                return {
+                    blue: 'blue',
+                    addnum: 10,
+                    num: 10
+                }
+            }
+        })
+        new Vue({
+            el: '#app',
+            data: {},
+            methods: {
+                ph(event) {
+                    var box = document.querySelector('.box')
+                    if (!event) {
+                        document.querySelector('.box').style.color = 'red'
+                    } else {
+                        var a = event.a;
+                        var b = event.b;
+                        var c = event.c;
+                        if (a) {
+                            document.querySelector('.box').style.color = a
+
+                        } else if (b) {
+                            box.style.fontSize = parseInt(box.style.fontSize) + b + 'px'
+                        } else if (c) {
+                            box.style.fontSize = parseInt(box.style.fontSize) - c + 'px'
+                        }
+                    }
+
+
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

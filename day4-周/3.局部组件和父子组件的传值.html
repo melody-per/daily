@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <aaa :ccc='ccc' :ddd-fac='dddF'></aaa>
+        <bbb :ccc='ccc' :ddd-fac='dddF'></bbb>
+        <ggg></ggg>
+    </div>
+    <script src='vue.js'></script>
+    <script>
+        //全局组件
+        Vue.component('aaa', {
+            //2.接收在子组件定义的位置通过 props属性来接收, props值是一个数组
+            // props在传递值接收值的时候,尽量都是要小写,如果非要使用到驼峰命名,在属性绑定传递的时候,使用短横线的方式,
+            // 在 props中接收要使用驼峰的方式
+            props: ["ccc", "dddFac"],
+            template: `<button  @click="msg1"> <h2>{{msg}}---{{ccc}}---{{dddFac}}</h2></button>`,
+            data() {
+                return {
+                    msg: 111
+                }
+            },
+            methods: {
+                msg1() {
+                    return this.msg++
+                }
+            },
+        })
+        //全局组件
+        Vue.component('bbb', {
+            props: ["ccc", "dddFac"],
+            template: `<p><b>{{msg2}}---{{ccc}}---{{dddFac}}</b></p>`,
+            data() {
+                return {
+                    msg2: 456
+                }
+            },
+        })
+        //
+        var ggg = {
+            template: `<h2>{{ggg1}}</h2>`,
+            data() {
+                return {
+                    ggg1: 11112
+                }
+            },
+        }
+        new Vue({
+            el: '#app',
+            data: {
+                ccc: '-----我是父组件传递过来的信息',
+                dddF: '-----我还是是父组件传递过来的信息',
+            },
+            //局部组件
+            components: {
+
+                
+                'ggg': ggg,
+            },
+        })
+    </script>
+</body>
+
+</html>

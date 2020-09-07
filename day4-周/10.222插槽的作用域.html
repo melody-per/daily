@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <button @click='abc'>切换</button>vip:{{boo1}}
+
+        <vip :boo="boo1">
+            <template v-slot='scoped'>
+                <img v-if='scoped.row==true' src="vip.jfif" alt="" width="175">
+                <img v-else src="fvip.jfif" alt="" width="100">
+            </template>
+        </vip>
+    </div>
+    <script src='vue.js'></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                boo1: true
+            },
+            methods: {
+                abc() {
+                    if (this.boo1 == true) {
+                        this.boo1 = false
+                    } else {
+                        this.boo1 = true
+
+                    }
+                }
+            },
+            components: {
+                'vip': {
+                    props: ['boo'],
+                    template: `<h1>欢迎登录：<slot  :row='boo'></slot></h1>`
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
