@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="./jquery.min.js"></script>
+    <script>
+        //封装的解决回调地狱的函数
+        function request(url, ) {
+            return new Promise((resolve, seject) => {
+                $.ajax({
+                    url: url,
+                    success(data) {
+                        resolve(data)
+                    },
+                    error(err) {
+                        reject(err)
+                    }
+                })
+            })
+        }
+
+        request('http://localhost:3000/data').then(data => {
+                console.log(data);
+                //给个返回值,链起来
+                return request('http://localhost:3000/data1')
+            })
+            .then(data => {
+                console.log(data + '我有定时器');
+                return request('http://localhost:3000/data2')
+            })
+            .then(data => {
+                console.log(data);
+                return 123; //如果没有promise对象,会自动创建一个
+            })
+            .then(data => {
+                console.log(data); //123
+            })
+            //不是哪个的catch,而是链路上谁出错就捕获谁
+            .catch(err => {
+                console.log(err);
+            })
+            //不管成功与否,最后都会调用finally()方法
+            .finally(() => {
+                console.log('最后的调用');
+            })
+    </script>
+</body>
+
+</html>

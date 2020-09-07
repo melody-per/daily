@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="./jquery.min.js"></script>
+    <script>
+        $.ajax({
+            url: "http://localhost:3000/data", //默认当前页
+            success: function (res) { //请求成功回调
+                console.log(res);
+            },
+            error: function (e) { //请求超时回调
+                if (e.statusText == "timeout") {
+                    alert("请求超时")
+                }
+            },
+
+        })
+        var p = new Promise(function (resolve, reject) {
+            console.log(resolve);
+            console.log(reject);
+            var a = true;
+            return a ? resolve(a) : reject(a)
+        })
+        p.then(a => {
+            console.log(a);
+        });
+        p.catch(a => {
+            console.log(a);
+        })
+    </script>
+</body>
+
+</html>
