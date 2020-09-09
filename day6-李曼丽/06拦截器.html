@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <li v-for='item in list' :key='item.id'>{{item.name}}</li>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script>
+        axios.defaults.baseURL = 'http://localhost:3000/';
+        axios.interceptors.request.use(function(config) {
+            console.log(config);
+            config.sex = 'man';
+            return config;
+
+        }, function(error) {
+            // console.log(error);
+            return Promise.reject(error);
+        });
+        axios.interceptors.response.use(function(res) {
+            console.log("响应");
+            console.log(res);
+            return res.data;
+        });
+        new Vue({
+            el: '#app',
+            data: {
+                list: [],
+            },
+            methods: {},
+            created() {
+                axios.get('fruits').then(res => {
+                    console.log(res);
+                    this.list = res;
+                });
+            },
+        });
+    </script>
+</body>
+
+</html>
