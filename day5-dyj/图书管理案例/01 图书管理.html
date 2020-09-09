@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style type="text/css">
+        .grid {
+            margin: auto;
+            width: 530px;
+            text-align: center;
+        }
+
+        .grid table {
+            border-top: 1px solid #C2D89A;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .grid th,
+        td {
+            padding: 10;
+            border: 1px dashed #F3DCAB;
+            height: 35px;
+            line-height: 35px;
+        }
+
+        .grid th {
+            background-color: #F3DCAB;
+        }
+
+        .grid .book {
+            padding-bottom: 10px;
+            padding-top: 5px;
+            background-color: #F3DCAB;
+        }
+
+        .grid .total {
+            height: 30px;
+            line-height: 30px;
+            background-color: #F3DCAB;
+            border-top: 1px solid #C2D89A;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="grid">
+            <div>
+                <h1>图书管理</h1>
+                <div class="book">
+                    <div>
+                        <label for="id"> 编号： </label> <input type="text" id="id" v-model='id' v-focus />
+                        <label for="name"> 名称： </label>
+                        <input type="text" id="name" v-model='name' />
+                        <!-- 名字重复后禁用 -->
+                        <button @click="handeler" :disabled="isSubmit">提交</button>
+                    </div>
+                </div>
+            </div>
+            <div class="total"><span>图书总数：</span> <span>{{books.length}}</span></div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>名称</th>
+                        <th>时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="item in books">
+                        <td>{{item.id}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.data | dateFormate('yyyy-MM-DD hh:mm:ss')}}</td>
+                        <td>
+                            <a href="javascript:;" @click="deletebooks(item.id)">删除</a> |
+                            <a href="javascript:;" @click="editbooks(item.id)">修改</a>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <script src="http://cdn.staticfile.org/moment.js/2.24.0/moment.js"></script>
+    <script src="../lib/axios.js"></script>
+
+    <script>
+        //配置默认地址:
+        axios.defaults.baseURL = "http://localhost:3000/";
+
+        // 响应拦截器 响应之前会进入响应拦截器
+        axios.interceptors.response.use(function (res) {
+            // console.log('响应');
+            // console.log(res);
+            // 在响应拦截器中 将data 剥离
+            return res.data;
+        });
+
+        //1-- 创建过滤器
+        Vue.filter('dateFormate', (val, prams) => {
+            const date = new Date();
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+            const day = date.getDay();
+            const h = date.getHours();
+            const m = date.getMinutes();
+            const s = date.getSeconds();
+
+            return `${year}-${month}-${day}  ${h}:${m}:${s}`
+        })
+
+        //定义自动聚焦
+        Vue.directive('focus', {
+            inserted(el) {
+                el.focus();
+            }
+        })
+
+        new Vue({
+            el: "#app",
+            data: {
+                //  定义一个空id和name
+                id: '',
+                name: '',
+                isEdit: false,
+                books: [],
+                isSubmit: false,
+            },
+            created: function () {
+               this.getbooks();
+            },
+
+            methods: {
+                //封装获取图书列表的方法
+                async getbooks() {
+                    this.books = await axios.get("books")
+                },
+
+
+                //增
+                async handeler() {
+                    if (!this.name) return;
+                    //1- 渲染数据
+                    if (this.isEdit == false) {
+                       //利用接口推数据
+                       const res = await axios.post("books",{name: this.name});
+                       console.log(res);
+                       if(res.status== 200){
+                           this.getbooks()
+                       }
+
+                    } else {
+                        const res = await axios.put("books/" + this.id , {name:this.name});
+                        if(res.status == 200){
+                           this.getbooks()
+                        }
+                        this.isEdit = false;
+                    }
+                    this.id = this.name = ''
+                },
+
+                //删
+               async deletebooks(id) {
+                    const res = await axios.delete("books/" + id)
+                    if(res.status == 200){
+                        this.getbooks();
+                    }
+                },
+
+                //改
+                async editbooks(id) {
+                    //当点击修改内容时, 修改isEdit状态
+                    this.isEdit = true;
+                    const res = await axios.get("books/" + id);
+                    console.log(res);
+                    this.id = res.id;
+                    this.name = res.name;
+                }
+            },
+
+            watch: {
+                async name(val) {
+                    const res = await axios.get("books/book/" + val);
+                    this.isSubmit = res.status == 1 ? true:false;
+                }
+            }
+
+        });
+    </script>
+</body>
+
+</html>

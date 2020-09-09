@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="lib/Vue.js"></script>
+    <script src="lib/vue-router_3.0.2.js"></script>
+
+    <div id="app">
+
+        <router-link  to="/music">主页</router-link>
+        <router-link  to="/movie">电影</router-link>
+        <router-link  to="/news">音乐</router-link>
+    
+    <!-- 路由占位 -->
+        <router-view></router-view>    
+    </div>
+    <script>
+        //1- 创建组件
+        const music = {
+            //template  路由的占位符
+            template: `<div>音乐列表</div>`
+        };
+        const movie = {
+            template: `<div>电影列表</div>`
+        };
+
+        const news = {
+            template: `<div>新闻列表</div>`
+        };
+        
+        //2- 创建路由规则  是一个数组
+        const routes = [
+            //component  组件的占位符
+            {
+                path: '/music',
+                component: music
+            },
+            {
+                path: '/movie',
+                component: movie
+            },
+            {
+                path: '/news',
+                component: news
+            },
+        ];
+
+        //3- 
+        // 创建路由实例并挂载实例
+        const router = new VueRouter({
+            // routes
+            routes: routes // -->routes
+        })
+
+        new Vue({
+            el: '#app',
+            data: {
+             
+            },
+            methods: {
+                todo() {},
+            },
+            router,
+        })
+    </script>
+
+</body>
+
+</html>

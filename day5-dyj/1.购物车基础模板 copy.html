@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Honey!❤🎈</title>
+
+    <style type="text/css">
+        .container .cart {
+            width: 300px;
+            margin: auto;
+        }
+
+        .container .title {
+            background-color: lightblue;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            /*color: #fff;*/
+        }
+
+        .container .total {
+            background-color: #ffce46;
+            height: 50px;
+            line-height: 50px;
+            text-align: right;
+        }
+
+        .container .total button {
+            margin: 0 10px;
+            background-color: #dc4c40;
+            height: 35px;
+            width: 80px;
+            border: 0;
+        }
+
+        .container .total span {
+            color: red;
+            font-weight: bold;
+        }
+
+        .container .item {
+            height: 55px;
+            line-height: 55px;
+            position: relative;
+            border-top: 1px solid #add8e6;
+        }
+
+        .container .item img {
+            width: 45px;
+            height: 45px;
+            margin: 5px;
+        }
+
+        .container .item .name {
+            position: absolute;
+            width: 90px;
+            top: 0;
+            left: 55px;
+            font-size: 16px;
+        }
+
+        .container .item .change {
+            width: 100px;
+            position: absolute;
+            top: 0;
+            right: 50px;
+        }
+
+        .container .item .change a {
+            font-size: 20px;
+            width: 30px;
+            text-decoration: none;
+            background-color: lightgray;
+            vertical-align: middle;
+        }
+
+        .container .item .change .num {
+            width: 40px;
+            height: 25px;
+        }
+
+        .container .item .del {
+            position: absolute;
+            top: 0;
+            right: 0px;
+            width: 40px;
+            text-align: center;
+            font-size: 40px;
+            cursor: pointer;
+            color: red;
+        }
+
+        .container .item .del:hover {
+            background-color: orange;
+        }
+    </style>
+</head>
+
+<body>
+    <!--? 引入容器 app -->
+    <div id='app'>
+
+        <shopping-car></shopping-car>
+
+    </div>
+
+    <!--? 引入容器 Vue.js -->
+    <script src='./lib/Vue.js'></script>
+    <script>
+        //去除控制台复杂信息
+        Vue.config.productionTip = false;
+
+
+        //.FIXME: 抽离对象
+
+        //.TODO: 头部区域
+        const shoppingHeader = {
+            template: `
+            <div class="title">张三的商品</div>
+            `
+        }
+
+        //.TODO: 主体区域
+        const shoppingContent = {
+            template: `
+            <div>
+                    <div class="item">
+                        <img src="img/a.jpg" />
+                        <div class="name">TCL彩电</div>
+                        <div class="change">
+                            <a href="">－</a> <input type="text" class="num" value="1" />
+                            <a href="">＋</a>
+                        </div>
+                        <div class="del">×</div>
+                    </div>     
+            `
+        }
+
+        //.TODO: 尾部区域
+        const shoppingFooter = {
+            template: `
+            <div class="total"><span>总价：6000</span> <button>结算</button></div>
+            `
+        }
+
+
+        //.FIXME: 购物车总组件  shopping-car
+        // 在全局中创建一个组件  Vue.component('组件名',配置对象)
+        Vue.component('shopping-car', {
+            template: `
+        
+            <div class="container">
+            <div class="cart">
+                <shopping-header></shopping-header>
+                <shopping-content></shopping-content>
+                <shopping-footer></shopping-footer>
+            </div>
+          </div>
+          
+         `,
+            // data 必须是一个函数,data里面保存数据
+            data() {
+                // 只要写了 data 就必须 return一个对象,封闭作用域 (闭包),操作逻辑写在return里
+                return {
+                        uname: '张三2',
+                        list: [{
+                            id: 1,
+                            name: 'TCL彩电',
+                            price: 1000,
+                            num: 1,
+                            img: 'img/a.jpg'
+                        }, {
+                            id: 2,
+                            name: '机顶盒',
+                            price: 1000,
+                            num: 1,
+                            img: 'img/b.jpg'
+                        }, {
+                            id: 3,
+                            name: '海尔冰箱',
+                            price: 1000,
+                            num: 1,
+                            img: 'img/c.jpg'
+                        }, {
+                            id: 4,
+                            name: '小米手机',
+                            price: 1000,
+                            num: 1,
+                            img: 'img/d.jpg'
+                        }, {
+                            id: 5,
+                            name: 'PPTV电视',
+                            price: 1000,
+                            num: 2,
+                            img: 'img/e.jpg'
+                        }]
+                    
+                }
+            },
+            // 购物车的三个子组件
+            components: {
+
+                // TODO 头部组件
+                shoppingHeader,
+
+                // TODO 主体组件
+                shoppingContent,
+
+                // TODO 尾部组件
+                shoppingFooter,
+
+            }
+        })
+
+
+        // TODO 引入数据 
+        const vm = new Vue({
+            el: '#app',
+            data: {
+
+            },
+            methods: {
+
+            },
+        })
+    </script>
+</body>
+
+</html>

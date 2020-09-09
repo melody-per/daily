@@ -1,0 +1,310 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        .container .cart {
+            width: 300px;
+            margin: auto;
+        }
+
+        .container .title {
+            background-color: lightblue;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            /*color: #fff;*/
+        }
+
+        .container .total {
+            background-color: #FFCE46;
+            height: 50px;
+            line-height: 50px;
+            text-align: right;
+        }
+
+        .container .total button {
+            margin: 0 10px;
+            background-color: #DC4C40;
+            height: 35px;
+            width: 80px;
+            border: 0;
+        }
+
+        .container .total span {
+            color: red;
+            font-weight: bold;
+        }
+
+        .container .item {
+            height: 55px;
+            line-height: 55px;
+            position: relative;
+            border-top: 1px solid #ADD8E6;
+        }
+
+        .container .item img {
+            width: 45px;
+            height: 45px;
+            margin: 5px;
+        }
+
+        .container .item .name {
+            position: absolute;
+            width: 90px;
+            top: 0;
+            left: 55px;
+            font-size: 16px;
+        }
+
+        .container .item .change {
+            width: 100px;
+            position: absolute;
+            top: 0;
+            right: 50px;
+        }
+
+        .container .item .change a {
+            font-size: 20px;
+            width: 30px;
+            text-decoration: none;
+            background-color: lightgray;
+            vertical-align: middle;
+        }
+
+        .container .item .change .num {
+            width: 40px;
+            height: 25px;
+        }
+
+        .container .item .del {
+            position: absolute;
+            top: 0;
+            right: 0px;
+            width: 40px;
+            text-align: center;
+            font-size: 40px;
+            cursor: pointer;
+            color: red;
+        }
+
+        .container .item .del:hover {
+            background-color: orange;
+        }
+    </style>
+</head>
+
+<body>
+  
+    <!-- 效果思路:  
+        渲染功能(父传子):  父组件单向绑定值并赋值给自定义的变量   子组件利用props接收父组件的值 并 v-for动态遍历渲染
+
+    1-- 删除功能(子传父):   用filter方法把删除功能做出
+         1.1 给父组件(Vue构造实例)添加自定义函数名并把自己的函数方法赋值 > ---- @remove="handeler($event)"
+         1.2  子组件用$emit把自定义的函数名和参数传入 > ------     @click="$emit('remove' , item.id)" -->
+     
+     <!-- 2-购物车 增   减  输入框改值  时价格动态改变
+            2.1   增   减
+               给子组件添加函数名 并传入参数   (可以利用传参时的不同状态用if条件判断执行父组件的哪一个函数)
+               调用$emit调用父组件函数  
+            2.2   输入框
+            主体思路:  获取index索引  将此索引的动态改变的数值赋值给 num
+        
+    -->
+
+
+    <div id="app">
+
+        <shopping-car ></shopping-car>   
+
+    </div>
+
+
+    <script src='./lib/Vue.js'></script>
+
+    <script>
+        //3- 定义三个 组件
+        //定义头部组件
+        const  shoppingsHeader ={
+            props:['name'],
+            template:`
+            
+            <div class="title">{{name}}</div>
+            `
+        }
+        
+        //定义中部组件
+        const  shoppingsContainer ={
+            props:["first"],
+            template:`
+            <div>
+                    <div class="item" v-for="item in first">
+                        <img :src="item.img">
+                        <div class="name">{{item.name}}</div>
+                        <div class="change">
+                            <a href=""  @click.prevent="handelerless(item.id)">－</a>
+                             <input type="text" class="num" :value="item.num" @change="change(item.id, $event)">
+                            <a href="" @click.prevent="handelerAdd(item.id)">＋</a>
+                        </div>
+                        <div class="del" @click.prevent="delitem(item.id)">×</div>
+                    </div>
+
+                    </div>
+                  
+            `,
+            methods:{
+                //删除功能
+                delitem(id){
+                   // console.log(id);
+                    this.$emit('remove',id)
+                },
+                //增功能
+                handelerAdd(id){;
+                    //获取点击的该id  调用父组件的add函数并传参
+                     this.$emit('add',{id : id , flag:"addbtn"})
+                },
+                //减功能
+                handelerless(id){
+                    console.log(id);
+                    this.$emit('add',{id : id , flag:"lessbtn"})
+                },
+                //输入框
+                change(id , event){
+                    // console.log(id);
+                   // console.log(event.target.value);
+
+                   //event.value获取事件信息
+                   var val = +event.target.value
+
+                   //调用父组件并以对象形式传参
+                   this.$emit('add',{id : id , flag:"changebtn1" , val})
+                    
+                }
+            }
+          
+        }
+
+
+        //定义尾部组件
+        const  shoppingsFooter ={
+            props:['list'],
+            template:`
+            <div class="total"><span>总价：{{sum}}</span> <button>结算</button></div>
+            
+            `,
+            computed:{
+               sum(){
+                   var total = 0
+                this.list.forEach(item => total += item.num * item.price)  ;
+                return total                 
+               }
+            }
+        }
+
+        //1 创一个全局组件
+        Vue.component('shopping-car', {
+            data() {
+                return {
+                    
+                    uname: '张三22',
+                    list: [{
+                        id: 1,
+                        name: 'TCL彩电',
+                        price: 1000,
+                        num: 1,
+                        img: 'img/a.jpg'
+                    }, {
+                        id: 2,
+                        name: '机顶盒',
+                        price: 1000,
+                        num: 1,
+                        img: 'img/b.jpg'
+                    }, {
+                        id: 3,
+                        name: '海尔冰箱',
+                        price: 1000,
+                        num: 1,
+                        img: 'img/c.jpg'
+                    }, {
+                        id: 4,
+                        name: '小米手机',
+                        price: 1000,
+                        num: 1,
+                        img: 'img/d.jpg'
+                    }, {
+                        id: 5,
+                        name: 'PPTV电视',
+                        price: 1000,
+                        num: 2,
+                        img: 'img/e.jpg'
+                    }]
+                
+                }
+            },
+            template: `
+                
+        <div class="container">
+            <div class="cart">
+                <shoppingsHeader :name="uname"></shoppingsHeader>
+                <shoppingsContainer  :first='list' @remove="handeler($event)"  @add="changebtn($event)" ></shoppingsContainer>
+                <shoppingsFooter :list="list"></shoppingsFooter>
+            </div>
+        </div>
+        
+                `,
+            methods: {
+                //1- 创建删除功能
+                handeler(val){
+                    //利用filter获取与当前点击的id不同的所有值  以数组返回
+                    this.list = this.list.filter(item => item.id != val)
+                },
+                //增加功能
+                changebtn(str){
+
+                    //findIndex() 找索引
+                    var index = this.list.findIndex(item => str.id == item.id );
+                    console.log(index);
+
+                 console.log(str);
+                    //增加
+                    
+                    //如果传入的参数flag符合条件时
+                   if(str.flag == 'addbtn'){
+                        this.list[index].num++
+                   }else if(str.flag == 'lessbtn'){
+                   
+                       if(this.list[index].num <= 0) return
+                        this.list[index].num--
+                   }else if(str.flag == 'changebtn1'){
+                        this.list[index].num = str.val;
+             
+
+                   }
+                    
+                    
+                }
+            },
+            //2- 挂载三个局部组件
+            components: {
+                shoppingsHeader,
+                shoppingsContainer,
+                shoppingsFooter,
+            }
+
+        })
+
+        new Vue({
+            el: '#app',
+            data: {
+                msg: ''
+            },
+            methods: {
+                todo() {}
+            }
+        })
+    </script>
+</body>
+
+</html>

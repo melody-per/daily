@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Honey!❤🎈</title>
+</head>
+
+<body>
+    <!--? 引入容器 app -->
+    <div id='app'>
+        <button @click="del">删除</button>
+        <button @click="add">增加</button>
+        <button @click="edit">修改</button>
+        <li :key='item.id' v-for='item in list' >{{item.name}}</li>
+    </div>
+
+    <!-- axios.js 放在  vue.js 上面 -->
+    <script src="lib/axios.js"></script>
+    <!--? 引入容器 Vue.js -->
+    <script src='https://cdn.jsdelivr.net/npm/vue/dist/vue.js'></script>
+ 
+    <script>
+        //配置默认地址:
+        axios.defaults.baseURL = "http://localhost:3000/";
+        //配置请求头: 111是后端返回的随机
+        axios.defaults.headers.common['Authorization'] = '111'
+
+          //去除控制台复杂信息
+          Vue.config.productionTip = false;
+
+        //1- 安装json-server 
+        //2- 创建json文件
+        //3- 访问js文件   json-server --watch db.json  
+        new Vue({
+            el: '#app',
+            data: {
+                list:[],
+            },
+            methods: {
+                //删
+                del(){
+                    axios.delete("fruits/7").then(res=>{
+                        console.log(res.data);
+                    })
+                },
+
+                //增
+                add(){
+                    axios.post("fruits",{name:'11'}).then(res=>{
+                    console.log(res.data);
+                    })
+                },
+
+                //改
+                edit(){
+                    axios.put("http://localhost:3000/fruits/4",{name:'芒果'}).then(res=>{
+                        console.log(res.data);
+                    })
+                }
+            },
+
+            //查 
+             created(){
+                axios.get('http://localhost:3000/fruits').then
+                (res=>{
+                    // console.log(res);
+                    this.list = res.data;
+                })
+
+             }
+        })
+      
+     
+    </script>
+</body>
+
+</html>

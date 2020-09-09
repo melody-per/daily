@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="lib/jquery.js"></script>
+    <script>
+
+        //构造 Promise 函数  resolve 接收调用成功的信息  reject接收调用失败的信息
+        const p = new Promise((resolve,reject)=>{
+
+            $.ajax({
+                url:'http://localhost:3000/data',
+                success(data){
+                    resolve(data)
+                },
+                error(err){
+                    reject(err)
+                }
+
+            })
+
+        })
+
+        // .then  返回成功的响应  .catch 返回失败的响应
+    p.then(data=>{
+        console.log(data);
+    })
+
+    .catch(err=>{
+        console.log(err);
+    })
+    </script>
+</body>
+</html>

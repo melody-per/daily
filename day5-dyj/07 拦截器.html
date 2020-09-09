@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Honey!❤🎈</title>
+    <link rel='icon' href='../../favicon/favicon.ico'>
+    <link rel="stylesheet" href="./lib/Vue.css">
+
+    <!-- .FIXME: 导入 fundebug.js   -->
+    <script src="https://js.fundebug.cn/fundebug.2.0.0.min.js" apikey="9b69babcb4dc097955cd50f5cb763201d3c2d32c40eecd8dfdc8cb2d360f3489" crossorigin="anonymous"></script>
+
+    <script src="./lib/Vue.js"></script>
+    <script src="./node_modules/axios/dist/axios.js"></script>
+
+
+</head>
+
+<body>
+
+    <div id="app">
+        <h3>拦截器</h3>
+        <button @click='add'>增加</button>
+
+
+    </div>
+
+    <script>
+        //.TODO: 添加一个 baseURL 后面发起请求 可以省略   http://localhost:3000/
+        axios.defaults.baseURL = 'http://localhost:3000/';
+
+        //.TODO: 一般添加一个身份令牌
+        // axios.defaults.headers.common['Authorization'] = '111'
+
+
+        // 我们每次发送的请求或者响应都会被axios的拦截器所监听到
+        // 在 axios 请求成功,返回的结果中,我们要的结果被包含在 data 的字段中,我们可以使用响应拦截器,将数据剥离出来
+
+        //.TODO: 请求拦截器 发送请求之前会进入请求拦截器
+        axios.interceptors.request.use(function(config) {
+
+            console.log(`%c 进入请求拦截器`, 'color:#89CFF0');
+
+            return config;
+
+        }, function(error) {
+
+            return Promise.reject(error);
+        });
+
+        //.TODO: 响应拦截器 响应之前会进入响应拦截器
+        axios.interceptors.response.use(function(res) {
+
+            // 在响应拦截器中 将data剥离出来,这样在后面获取数据时 打印 res就是直接返回 data数据
+            console.log(`%c 进入响应拦截器`, 'color:#ff6100');
+
+            return res.data;
+
+        }, function(error) {
+
+            return Promise.reject(error);
+        });
+
+
+        //.FIXME: 1.安装 json-server  npm i json-server -g
+        //.TODO: 2.创建 girls.json
+        // TODO 3.json-server  --watch girls.json 就可以访问 localhost:3000/girls 地址 json-server 帮我们开启的服务
+
+        //.TODO:  Promise.then  可以获取结果
+
+
+
+        //去除控制台复杂信息
+        Vue.config.productionTip = false;
+
+
+        // 创建一个  vue 实例
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                list: []
+            },
+
+            methods: {
+                //.FIXME: axios 增加
+                add() {
+
+                    // 发送 axios post请求 (添加数据) 添加一项 数据(需要携带 name 参数, id可以不写自增)
+                    axios.post('girls', {
+                        name: '小娟'
+                    }).then(res => {
+                        console.log(res);
+                    })
+
+
+                },
+            },
+
+            //.TODO:  利用钩子函数 createds 获取json里面的数据
+            created() {
+
+                axios.get('girls').then(res => {
+
+                    // TODO 上面添加拦截器后(剥离data数据后)  在这里打印res就是返回的 data 数据
+                    this.list = res.data;
+                })
+
+            }
+
+        })
+    </script>
+</body>
+
+</html>

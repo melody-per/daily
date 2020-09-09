@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+// Fetch API是新的ajax解决方案 Fetch会返回Promise
+
+
+    // fetch('http://localhost:3000/data2').then((res)=>{
+    //     //此时的 .then 响应的是数据流  不是promise对象
+    //     //res.text() 才是promise对象
+    //     return res.text();
+    // }).then((res)=>{
+    //     //此时的 .then 响应的是promise  打印的是真正响应的结果
+    //     console.log(res);
+    // })
+
+
+    //通过delete请求方式传参   
+    fetch('http://localhost:3000/books/36',{method:'delete'})
+    .then((res)=>{
+        //此时的 .then 响应的是数据流  不是promise对象
+        //res.text() 才是promise对象
+        return res.text();
+    })
+    .then((res)=>{
+        //此时的 .then 响应的是promise  打印的是真正响应的结果
+        console.log(res);
+    });
+
+    </script>
+</body>
+</html>
