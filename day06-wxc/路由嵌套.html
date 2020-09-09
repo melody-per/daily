@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <router-link to="/music">音乐列表</router-link>
+        <router-link to="/movie">电影列表</router-link>
+        <router-link to="/comic">动漫列表</router-link>
+        <router-view>
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script src="../../vue-router_3.0.2.js"></script>
+    <script>
+        const music = {
+            template: `<div>音乐类型
+            <router-link to="/music/pop">pop</router-link>
+            <router-link to="/music/blue">blue</router-link>
+            <router-link to="/music/rhythm">r&b</router-link>
+            <router-view />
+            </div>`
+        }
+        const pop = {
+            template: `<div>pop</div>`
+        }
+        const blue = {
+            template: `<div>blue</div>`
+        }
+        const rhythm = {
+            template: `<div>r&b</div>`
+        }
+
+
+        const movie = {
+            template: `<div>电影类型
+                <router-link to="/movie/xuanyi">悬疑</router-link>
+                <router-link to="/movie/actor">动作</router-link>
+                <router-link to="/movie/wenyi">文艺</router-link>
+                <router-view />
+            </div>`
+        }
+        const xuanyi = {
+            template: `<div>悬疑</div>`
+        }
+        const actor = {
+            template: `<div>动作</div>`
+        }
+        const wenyi = {
+            template: `<div>文艺</div>`
+        }
+
+
+        const comic = {
+            template: `<div>动漫类型
+                <router-link to="/comic/naruto">Naruto</router-link>
+                <router-link to="/comic/onepiece">One Piece</router-link>
+                <router-link to="/comic/blench">Blench</router-link>
+                <router-view />
+                    </div>
+                `
+        }
+        const naruto = {
+            template: `<div>Naruto</div>`
+        }
+        const onepiece = {
+            template: `<div>One Piece</div>`
+        }
+        const blench = {
+            template: `<div>Blench</div>`
+        }
+
+
+        const router = new VueRouter({
+            routes: [
+                {
+                    path: "/", redirect: "/music"
+                },
+                {
+                    path: "/music", component: music,
+                    children: [{ path: "/music/pop", component: pop },
+                    { path: "/music/blue", component: blue },
+                    { path: "/music/rhythm", component: rhythm },]
+                },
+                {
+                    path: "/movie", component: movie, children: [
+                        { path: "/movie/xuanyi", component: xuanyi },
+                        { path: "/movie/actor", component: actor },
+                        { path: "/movie/wenyi", component: wenyi }
+                    ]
+                },
+                {
+                    path: "/comic", component: comic, children: [
+                        { path: "/comic/naruto", component: naruto },
+                        { path: "/comic/onepiece", component: onepiece },
+                        { path: "/comic/blench", component: blench },
+                    ]
+                },
+            ]
+        }
+        )
+        new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            router
+        })
+    </script>
+</body>
+
+</html>

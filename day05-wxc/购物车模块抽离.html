@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+    <style type="text/css">
+        /* .container {} */
+
+        .container .cart {
+            width: 300px;
+            margin: auto;
+        }
+
+        .container .title {
+            background-color: lightblue;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            /*color: #fff;*/
+        }
+
+        .container .total {
+            background-color: #FFCE46;
+            height: 50px;
+            line-height: 50px;
+            text-align: right;
+        }
+
+        .container .total button {
+            margin: 0 10px;
+            background-color: #DC4C40;
+            height: 35px;
+            width: 80px;
+            border: 0;
+        }
+
+        .container .total span {
+            color: red;
+            font-weight: bold;
+        }
+
+        .container .item {
+            height: 55px;
+            line-height: 55px;
+            position: relative;
+            border-top: 1px solid #ADD8E6;
+        }
+
+        .container .item img {
+            width: 45px;
+            height: 45px;
+            margin: 5px;
+        }
+
+        .container .item .name {
+            position: absolute;
+            width: 90px;
+            top: 0;
+            left: 55px;
+            font-size: 16px;
+        }
+
+        .container .item .change {
+            width: 100px;
+            position: absolute;
+            top: 0;
+            right: 50px;
+        }
+
+        .container .item .change a {
+            font-size: 20px;
+            width: 30px;
+            text-decoration: none;
+            background-color: lightgray;
+            vertical-align: middle;
+        }
+
+        .container .item .change .num {
+            width: 40px;
+            height: 25px;
+        }
+
+        .container .item .del {
+            position: absolute;
+            top: 0;
+            right: 0px;
+            width: 40px;
+            text-align: center;
+            font-size: 40px;
+            cursor: pointer;
+            color: red;
+        }
+
+        .container .item .del:hover {
+            background-color: orange;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <my-chart></my-chart>
+    </div>
+    <script src='../../vue.js'></script>
+    <script>
+        // 标题
+        const cartTitle = {
+            props: ['uname'],
+            template: `<div class="title">{{uname}}</div>`
+        }
+        // 列表区域
+        const cartList = {
+            props: ['list'],
+            template: `<div>
+                    <div class="item" v-for="item in list":key="item.id">
+                        <img src=item.img />
+                        <div class="name">{{item.name}}</div>
+                        <div class="change">
+                            <a href="" @click.prevent="$emit('rec', [item.id, 'rec'])">－</a> 
+                            <input type="text" class="num" @blur="$emit('cge', [item.id, event.target.value])" :value="item.num" />
+                            <a href="" @click.prevent="$emit('add', [item.id, 'add'])">＋</a>
+                        </div>
+                        <div class="del" @click.prevent="$emit('remove', [item.id, 'del'])">×</div>
+                    </div>
+                </div>`,
+            // 抽离
+            // methods: {
+            //     delItem(id) {
+            //         this.$emit('remove', [id, 'del'])
+            //     },
+            //     addItem(id) {
+            //         this.$emit('add', [id, 'add'])
+            //     },
+            //     rceItem(id) {
+            //         this.$emit('rec', [id, 'rec'])
+            //     },
+            //     cgeItem(id, event) {
+            //         this.$emit('cge', [id, event.target.value])
+            //     }
+            // }
+        }
+
+        // 底部区域
+        const cartTotal = {
+            props: ['list'],
+            template: `<div class="total"><span>总价：{{sum}}</span> <button>结算</button></div>`,
+            computed: {
+                sum() {
+                    let sum = 0;
+                    this.list.forEach(item => sum += item.price * item.num)
+                    return sum
+                }
+            }
+        }
+        Vue.component('my-chart', {
+            template: `
+        <div class="container">
+            <div class="cart">
+                <cart-title :uname="uname"></cart-title>
+                <cart-list :list="list" @cge="handlerdel($event)" @remove="handlerdel($event)" @add="handlerdel($event)" @rec="handlerdel($event)"></cart-list>
+                <cart-total :list="list"></cart-total>
+            </div>
+        </div>
+            `,
+            data() {
+                return {
+                    uname: '张三sss',
+                    list: [{
+                        id: 1,
+                        name: 'TCL彩电',
+                        price: 1000,
+                        num: 1,
+                        img: 'img/a.jpg'
+                    }, {
+                        id: 2,
+                        name: '机顶盒',
+                        price: 1000,
+                        num: 1,
+                        img: 'img/b.jpg'
+                    }, {
+                        id: 3,
+                        name: '海尔冰箱',
+                        price: 1000,
+                        num: 1,
+                        img: 'img/c.jpg'
+                    }, {
+                        id: 4,
+                        name: '小米手机',
+                        price: 1000,
+                        num: 1,
+                        img: 'img/d.jpg'
+                    }, {
+                        id: 5,
+                        name: 'PPTV电视',
+                        price: 1000,
+                        num: 2,
+                        img: 'img/e.jpg'
+                    }]
+                }
+            },
+            components: {
+                'cart-title': cartTitle,
+                'cart-list': cartList,
+                'cart-total': cartTotal
+            },
+            methods: {
+                handlerdel(arr) {
+                    if (arr[1] == 'del') {
+                        this.list = this.list.filter(item => item.id != arr[0])
+                    } else if (arr[1] == 'add') {
+                        console.log(arr);
+                        this.list.some(item => {
+                            if (item.id == arr[0]) {
+                                item.num++
+                                return true
+                            }
+                        })
+                    } else if (arr[1] == 'rec') {
+                        this.list.some(item => {
+                            if (item.num < 1) return
+                            if (item.id == arr[0]) {
+                                item.num--
+                                return true
+                            }
+                        })
+                    } else {
+                        this.list.some(item => {
+                            console.log(arr);
+                            if (item.id == arr[0]) {
+                                item.num = arr[1]
+                                return true
+                            }
+                        })
+                    }
+                }
+            }
+        })
+        new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+        })
+    </script>
+</body>
+
+</html>

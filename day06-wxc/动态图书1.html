@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+    <style type="text/css">
+        .grid {
+            margin: auto;
+            width: 530px;
+            text-align: center;
+        }
+
+        .grid table {
+            border-top: 1px solid #c2d89a;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .grid th,
+        td {
+            padding: 10;
+            border: 1px dashed #f3dcab;
+            height: 35px;
+            line-height: 35px;
+        }
+
+        .grid th {
+            background-color: #f3dcab;
+        }
+
+        .grid .book {
+            padding-bottom: 10px;
+            padding-top: 5px;
+            background-color: #f3dcab;
+        }
+
+        .grid .total {
+            height: 30px;
+            line-height: 30px;
+            background-color: #f3dcab;
+            border-top: 1px solid #c2d89a;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="grid">
+            <div>
+                <h1>图书管理</h1>
+                <div class="book">
+                    <div>
+                        <label for="id">编号：</label>
+                        <input type="text" id="id" disabled v-model="id">
+                        <label for="name">名称：</label>
+                        <input type="text" id="name" v-model="name" v-focus>
+                        <button @click="addBook" :disabled="isOn">提交</button>
+                    </div>
+                </div>
+            </div>
+            <div class="total">
+                <span>图书总数：{{books.length}} </span><span></span>计算属性:{{num}}
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>名称</th>
+                        <th>时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr :key="item.id" v-for="(item,index) in books">
+                        <td>{{item.id}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.date | time}}</td>
+                        <td>
+                            <a href="#" @click="upBook(item.id)">编辑</a> |
+                            <a href="#" @click="delBook(item.id)">删除</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src='../../vue.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'></script>
+    <script>
+        // 设置请求头
+        axios.defaults.baseURL = "http://localhost:3000/"
+        // 设置响应拦截器
+        axios.interceptors.response.use(function (res) {
+            // 对响应数据做点什么
+            return res.data
+        }, function (error) {
+            // 对响应错误做点什么
+            return Promise.reject(error);
+        });
+        // 自定义属性,获取焦点
+        Vue.directive("focus", {
+            inserted(el) {
+                el.focus()
+            }
+        })
+        //时间过滤器
+        Vue.filter('time', function (val, parma) {
+            const date = new Date(val);
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+            const h = date.getHours();
+            const m = date.getMinutes();
+            const s = date.getSeconds();
+            if (parma == 'yyyy') {
+                return `${year}`
+            } else if (parma == 'yyyy-mm-dd') {
+                return `${year}-${month}-${day}`
+            } else {
+                return `${year}-${month}-${day} ${h}:${m}:${s}`
+            }
+        })
+        new Vue({
+            el: '#app',
+            data: {
+                id: '',
+                name: '',
+                // 控制提交按钮修改的开关
+                flag: true,
+                //提交按钮禁用
+                isOn: false,
+                books: []
+            },
+            created() {
+                this.getbook()
+            },
+            //计算属性
+            computed: {
+                num() {
+                    return this.books.length
+                }
+            },
+            //监视器,当名字改变时,检测是否重复,控制按钮禁用
+            watch: {
+                async name(val) {
+                    const res = await axios.get("books/book" + val)
+                    this.isOn = res.status == 1 ? false : true
+                }
+            },
+            methods: {
+                async getbook() {
+                    this.books = await axios.get("books")
+                },
+                async addBook() {
+                    if (!this.name.trim()) return
+                    if (this.flag) {
+                        const res = await axios.post("books/", { name: this.name })
+                        if (res.status == 200) {
+                            this.getbook()
+                        }
+                    } else {
+                        const res = await axios.put("books/" + this.id, { name: this.name })
+                        if (res.status == 200) {
+                            this.getbook()
+                        }
+                    }
+                    this.flag = true,
+                        this.id = this.name = ""
+                },
+                async upBook(id) {
+                    const res = await axios.get("books/" + id)
+                    this.id = res.id
+                    this.name = res.name
+                    this.flag = false
+                },
+                async delBook(id) {
+                    const res = await axios.delete("books/" + id)
+                    if (res.status == 200) {
+                        this.getbook()
+                    }
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>
