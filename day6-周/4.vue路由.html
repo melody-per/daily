@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to="/music">音乐</router-link>
+        <router-link to="/news">新闻</router-link>
+        <router-link to="/movie">视频</router-link>
+        <router-view></router-view>
+    </div>
+    <script src='vue.js'></script>
+    <script src='vue-router_3.0.2.js'></script>
+    <script>
+        //创建组件
+        const music = {
+            template: `<div>音乐列表</div>`
+        }
+        const news = {
+            template: `<div>新闻列表</div>`
+        }
+        const movie = {
+            template: `<div>视频列表</div>`
+        }
+        //创建路由规则
+        const abc = [{
+                path: '/',
+                redirect: '/music'
+            },
+            {
+                path: '/music',
+                component: music
+            },
+            {
+                path: '/news',
+                component: news
+            },
+            {
+                path: '/movie',
+                component: movie
+            }
+        ]
+        //创建路由实例并挂载规则
+        const router = new VueRouter({
+            routes: abc
+        })
+        new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            router
+        })
+    </script>
+</body>
+
+</html>

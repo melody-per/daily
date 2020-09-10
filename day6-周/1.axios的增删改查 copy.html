@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <ul>
+            <li v-for="item in list" :key="item.id">{{item.id}}:{{item.name}}</li>
+            <input type="text" v-model="val">
+            <button @click="add">增加</button>
+            <button @click="del">删除</button>
+            <button @click="change">修改</button>
+        </ul>
+    </div>
+    <script src='vue.js'></script>
+    <script src='axios.js'></script>
+    <script>
+        // 配置请求的基准URL地址
+        axios.defaults.baseURL = 'http://localhost:3000/'
+        axios.interceptors.response.use(function (res) {
+            // 在接收响应做些什么  
+            return res
+        }, function (err) {
+            // 对响应错误做点什么  
+            console.log(err)
+        })
+
+
+        new Vue({
+            el: '#app ',
+            data: {
+                list: [],
+                val: ""
+            },
+            methods: {
+                add() {
+                    axios.post("abc", {
+                        name: this.val
+                    })
+                    this.fn()
+                },
+                del() {
+                    axios.delete("abc/" +
+                        this.val
+                    )
+                    this.fn()
+                },
+                change() {
+                    axios.put("abc/7", {
+                        name: this.val
+                    })
+                    this.fn()
+                },
+
+                async fn() {
+                    const {
+                        data: res
+                    } = await axios.get("abc");
+                    this.list = res
+                    console.log(res);
+                }
+            },
+
+            created() {
+                this.fn()
+            }
+        })
+    </script>
+</body>
+
+</html>
