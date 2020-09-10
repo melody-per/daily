@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id='app'>
+        <router-link to="/country">中国</router-link>
+        <router-link to="/foreign">外国</router-link>
+        <router-view></router-view>
+    </div>
+    <script src='https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js'></script>
+    <script src="../../vue-router_3.0.2.js"></script>
+    <script>
+        const country = {
+            props: ['name', 'age'],
+            template: `<div>中国{{name}}---{{age}}
+                </div>`
+        }
+        const foreign = {
+            template: `<div>外国</div>`
+        }
+        const router = new VueRouter({
+            routes: [
+                { path: "/country", component: country, props: { name: "wxc", age: 22 } },
+                { path: "/foreign", component: foreign }
+            ]
+        })
+        new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            router
+        })
+    </script>
+</body>
+
+</html>
