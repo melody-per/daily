@@ -1,0 +1,40 @@
+ /* 防止页面加载时出现闪烁问题 */
+ /* .FIXME: 通过属性选择器 选择到带有属性 v-cloak 的标签,让他隐藏 */
+ 
+ [v-cloak] {
+     /* 元素隐藏    */
+     display: none;
+ }
+ /* 按钮样式 */
+ 
+ button {
+     background-color: skyblue;
+     color: #ff6100;
+     margin-bottom: 20px;
+     display: block;
+ }
+ 
+ h3 {
+     color: pink;
+ }
+ 
+ h4 {
+     color: tomato;
+ }
+ 
+ em {
+     margin-left: 10px;
+     color: greenyellow;
+ }
+ 
+ span {
+     display: block;
+     margin-top: 10px;
+     color: springgreen;
+ }
+ 
+ li {
+     list-style: none;
+     margin-top: 10px;
+     color: yellowgreen;
+ }

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <router-link to="/news/6">新闻</router-link>
+      <router-link to="/music">音乐</router-link>
+      <router-view></router-view>
+    </div>
+    <script src="lib/vue.js"></script>
+    <!-- <script src="lib/vue-router.js"></script> -->
+    <script src="lib/vue-router_3.0.2.js"></script>
+    <script>
+//
+        const news = {
+          
+            template: `<div><h2>新闻</h2>  <button @click="go"> 跳转到音乐</button></div>`,
+            methods:{
+              //抽离点击的函数
+              go(){
+                this.$router.push("/music")
+              }
+            }
+        }
+        const music = {
+            template: `<div>音乐  <button  @click="$router.push('/news/6')">跳转到新闻</button></div>`
+        }
+        // 路由对象和路由规则
+      const router =  new VueRouter({
+            routes: [
+                {path:'/',redirect:'/news'},
+                {path:'/news/:id',component:news},
+                {path:'/music',component:music}
+            ]
+        })
+        new Vue({
+            el: '#app',
+            data:{  },
+            methods:{},
+            router
+        })
+    </script>
+  </body>
+</html>
