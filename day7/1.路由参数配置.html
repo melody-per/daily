@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <router-link to="/a/1/2">aaaaa</router-link>
+        <router-link to="/b">bbbbb</router-link>
+        <router-link to="/c/3">ccccc</router-link>
+        <router-link :to="{name:'d',params:{id:4}}">ddddd</router-link>
+        <router-view></router-view>
+    </div>
+    <script src='vue.js'></script>
+    <script src='vue-router_3.0.2.js'></script>
+    <script>
+                //基于路由值--动态值(常用) 未用props接受可以在插值里使用{{$toute.params.动态值}}可直接获取
+        const a={
+            props: ['abc',"id"],
+            template:`<div>aaaaa1--{{abc}}--{{id}}---{{$route.params.abc}}--{{$route.params.id}}</div>`
+        }
+        const b={
+            props: ['name',"sex","age"],
+            template:`<div>bbbbb2---{{name}}--{{sex}}-{{age}}</div>`
+        }
+        const c={
+            props: ["id",'name',"sex","age"],
+            template:`<div>ccccc3----{{id}}---{{name}}--{{sex}}-{{age}}</div>`
+        }
+        //命名路由
+        const d={
+            props: ["id"],
+            template:`<div>ddddd4----{{id}}----{{$route.params.id}}</div>`
+        }
+        var router = new VueRouter({
+            routes:[
+                {path:"/",redirect:"/a/:abc/:id" },
+                //基于路由值--动态值(常用)
+                {path:"/a/:abc/:id",component:a,props: true},
+                //静态值
+                {path:"/b",component:b,props: {name:'jack',sex:"men",age:"28"},},
+                //静态值+基于路由值的结合
+                {path:"/c/:id",component:c,props: route=>({id:route.params.id ,name:'jack',sex:"men",age:"28"}),},
+                //命名路由+传参
+                {path:"/dddddddddddddddd/:id",name:"d",component:d,props: true},
+            ]
+        })
+        new Vue({
+            el: '#app',
+            data:{  },
+            methods:{},
+            router
+        })
+    </script>
+</body>
+</html>

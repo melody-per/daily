@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <router-link :to="{name:'aa'}">a111111111111 </router-link>
+        <router-link to="/b/12">b222222222222 </router-link>
+        <router-view></router-view>
+    </div>
+    <script src='vue.js'></script>
+    <script src='vue-router_3.0.2.js'></script>
+    <script>
+        //页面导航的两种方式：
+        // A.声明式导航：通过点击链接的方式实现的导航
+        // B.编程式导航：调用js的api方法实现导航
+        const a = {
+            template: `<h2>aaaaa<button @click="$router.push({name:'bb',params:{id:12}})">跳转到b2</button><button @click="$router.go(1)">前进一步</button> </h2>`
+        }
+        const b = {
+            template: `<h2>bbbbb<button @click="$router.push({name:'aa',params:{id:35}})">跳转到a1 </button > <button @click="$router.go(-1)">退一步</button> </h2>`
+        }
+        const router = new VueRouter({
+            routes: [{
+                    path: "/",
+                    redirect: "/a/35",
+                }, {
+                    path: "/a/:id",
+                    component: a,
+                    name: 'aa'
+
+                },
+                {
+                    path: "/b/:id",
+                    component: b,
+                    name: 'bb'
+                },
+            ]
+        })
+        new Vue({
+            el: '#app',
+            data: {},
+            methods: {},
+            router,
+        })
+    </script>
+</body>
+
+</html>
