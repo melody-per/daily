@@ -68,7 +68,6 @@ export default {
     },
     async getMenus () {
       const { data: res } = await this.$http.get('menus')
-      console.log(res.data)
       this.getMenusList = res.data
     },
     cunSontoken (path) {
